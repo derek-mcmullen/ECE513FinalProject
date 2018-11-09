@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router(); 
 
 // Import the model for Activity documents
 var Activity = require("../models/activity"); 
