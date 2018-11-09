@@ -9,7 +9,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
 var photonRouter = require('./routes/photon');
-var potholesRouter = require('./routes/potholes');
 var usersRouter = require('./routes/users');
 var activityRouter = require('./routes/activity'); 
 
@@ -65,7 +64,6 @@ app.use('/users', usersRouter);
 app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 app.use('/users', usersRouter);
-app.use('/potholes', potholesRouter);
 app.use('/activity', activityRouter); 
 
 // catch 404 and forward to error handler
