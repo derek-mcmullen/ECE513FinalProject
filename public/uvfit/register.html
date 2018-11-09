@@ -1,67 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>UVFit - Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/favicon.ico">
 
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <title>UVFit New User Registration</title>
 
-    <link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
-    <script src="/uvfit/javascripts/register.js" defer></script>
+    <!-- Bootstrap core CSS -->
+	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/signin.css" rel="stylesheet">
+	<link href="stylesheets/navbar.css" rel="stylesheet">
+	  
+	<script src="javascripts/register.js" defer></script>
   </head>
 
   <body>
-    <!-- Dropdown Structure -->
-    <ul id="dropdown1" class="dropdown-content">
-      <li><a href="index.html">Sign in</a></li>
-    </ul>
-    <nav>
-      <div class="nav-wrapper blue-grey darken-2">
-      	<a href="#!" class="brand-logo left"><img id="logo" src="images/logo.png"><span id="name">UVFit</span></a>
-      	<ul class="right ">
-            <!-- Dropdown Trigger -->
-	         <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">more_vert</i></a></li>
-	      </ul>
-      </div>
-    </nav>
-
-    <div class="row">
-      <div class="col s12 m6">
-        <div class="card blue-grey ">
-          <div class="card-content white-text">
-            <span class="card-title">Account Registration</span>
-            <div class="input-field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" >
-            </div>
-            <div class="input-field">
-              <label for="fullName">Full Name</label>
-              <input type="text" id="fullName" name="fullName" >
-            </div>
-            <div class="input-field">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" >
-            </div>
-            <div class="input-field">
-              <label for="passwordConfirm">Confirm Password</label>
-              <input type="password" id="passwordConfirm" name="passwordConfirm" >
-            </div>
-            <div class="card-action">
-              <div><a id="signup" class="waves-effect waves-light btn">Register</a></div>
-              <div id="account">Have an account? <a href="index.html">Sign In</a></div>
-            </div>
-          </div>
-          <div class="card-panel blue-text" id="ServerResponse" style="display: none"></div>
+	  
+	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html" id="navLogo">UVFit</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                <a class="dropdown-item" href="index.html">Blog Home 1</a>
+                <a class="dropdown-item" href="index.html">Blog Home 2</a>
+                <a class="dropdown-item" href="index.html">Blog Post</a>
+              </div>
+            </li>
+			  <li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signInButton">Sign In</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-secondary text-center" href="register.html" id="signUpButton">Sign Up</a>
+            </li>  
+          </ul>
         </div>
       </div>
+    </nav>
+	  
+    <form class="form-signin">
+	<div class="text-center">	
+      <img class="mb-4 mt-3" src="Images/favicon.ico" alt="" width="72" height="72">
+      <h1 class="h1 mb-3 font-weight-normal text-center"><Strong>UVFit</Strong> </h1>
+	  <h1 class="h3 mb-3 font-weight-normal text-center">New User Registration</h1>
+	</div>
+      <label for="email" class="mt-1 mb-0">Email Address</label>
+      <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+	  <label for="fullName" class="mt-1 mb-0">Full Name</label>
+      <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Full Name" required>
+      <label for="password" class="mt-1 mb-0">Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+	  <label for="passwordConfirm" class="mt-0 mb-0">Confirm Password</label>
+      <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control mb-4" placeholder="Confirm Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" id="signup">Create Account</button>
+	  <div id="account" class="mt-2 text-center">Already a User? <a href="signin.html">Sign In</a></div>
+	  <div class="card-text text-danger" id="ServerResponse" style="display: block"></div>
+      <p class="mt-5 mb-3 text-muted text-center">&copy; UVFit 2018</p>
+    </form>
+	 <!-- Bootstrap core JavaScript -->
+    <script src="javascripts/jquery/jquery.min.js"></script>
+    <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

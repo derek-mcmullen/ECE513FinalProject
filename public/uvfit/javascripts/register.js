@@ -3,6 +3,15 @@ function sendReqForSignup() {
   var fullName = document.getElementById("fullName").value;
   var password = document.getElementById("password").value;
   var passwordConfirm = document.getElementById("passwordConfirm").value;
+	
+  var isValid = true;
+    
+  var fullNameRe = /./;
+  var emailRe = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
+  var passwordReLength = /\b[a-zA-Z0-9]{10,20}\b/;
+  var passwordReLowerCase = /[a-z]/;
+  var passwordReUpperCase = /[A-Z]/;
+  var passwordReDigit = /[0-9]/;
 
   // FIXME: More thorough validation should be performed here. 
   if (password != passwordConfirm) {
@@ -11,6 +20,7 @@ function sendReqForSignup() {
     responseDiv.innerHTML = "<p>Password does not match.</p>";
     return;
   }
+	
   
   var xhr = new XMLHttpRequest();
   xhr.addEventListener("load", signUpResponse);
@@ -25,7 +35,7 @@ function signUpResponse() {
   if (this.status === 201) {
     if (this.response.success) {
       // Change current location to the signin page.
-      window.location = "index.html";
+      window.location = "signin.html";
     } 
     else {
       responseHTML += "<ol class='ServerResponse'>";
