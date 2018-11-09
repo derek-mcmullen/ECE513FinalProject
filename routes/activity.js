@@ -31,19 +31,14 @@ router.get('/summary/:devid', function(req, res, next) {
 	 }
       }
       res.status(200).json(responseJson);
-    });
+    }).sort({_id:-1});
 	    
     
 });
 
-router.post('/delete', function(req, res, next) { 
-   var newActivity = new Activity({deviceId:1234})
-   
-   var query = { 
-       deviceId: req.body.deviceId
-   }; 
-
-   newActivity.deleteMany({});  
+router.post('/delete', function(req, res, next) {  
+    Activity.find({ deviceId: req.body.deviceId }).remove().exec(); 
+    res.status(200).json({deleted:"yes"}); 
 }); 
 
 router.post('/update', function(req, res, next) { 

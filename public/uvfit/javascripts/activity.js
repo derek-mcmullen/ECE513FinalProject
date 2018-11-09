@@ -46,9 +46,9 @@ $(function() {
       sendReqForActivityInfo();
    }
    
-   // Register event listeners
-   $("#desiredDevice").change(function() { 
+   // Update page periodically
+   setInterval(function() { 
 	deviceNum = $("#desiredDevice").val(); 
 	sendReqForActivityInfo(deviceNum); 
-   }); 
+   }, 1000); 
 });
