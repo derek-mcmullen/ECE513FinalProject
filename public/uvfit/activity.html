@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	 <title>UVFIT - Home</title>
+
+	 <!-- Import Google Icon Font -->
+	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	 <!-- Import materialize.css -->
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">	
+	 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+	 <link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
+	 <script src="/uvfit/javascripts/status.js" defer></script>
+	 <script src="/uvfit/javascripts/signout.js" defer></script>
+	 <script src="/uvfit/javascripts/activity.js" defer></script>
+
+	 <!-- Let browser know website is optimized for mobile -->
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+<body>
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<li><a href="home.html">Home</a></li>
+		<li><a href="activity.html">Activity Data</a></li>
+		<li class="divider"></li>
+		<li><a href="#!" id="signout">Sign out</a></li>
+	</ul>
+	<nav>
+		<div class="nav-wrapper blue-grey darken-2">
+			<a href="home.html" class="brand-logo left"><img id="logo" src="images/logo.png"><span id="name">UVFit</span></a>
+			<ul class="right ">
+				<!-- Dropdown Trigger -->
+				<li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">more_vert</i></a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="row" id="main">
+		<div class="col s12 m12" id="activityDiv">
+			<h4> Enter DeviceID: </h4>
+			<input type="text" id="desiredDevice" default="123"> 
+			<ul class="collection with-header">
+				<li class="collection-header" id="activityHeader">
+					<h5>Activity Data</h5>
+				</li>
+				<span id="listItems"></span>
+			</ul>
+				<div class='red-text text-darken-2' id="error"></div>
+		</div>
+	</div>
+  </body>
+
+  <!-- Initialize dropdown menu in materialize -->
+  <script>
+    $(document).ready(function() {
+		$(".dropdown-button").dropdown();
+	 })
+  </script>
+
+</html>

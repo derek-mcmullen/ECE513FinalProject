@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'ECE 413/513 Fall 2018' });
+  res.render('index', { title: "Derek's Badass Server" });
 });
 
 module.exports = router;

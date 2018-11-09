@@ -3,6 +3,7 @@ var router = express.Router();
 
 // Import the model for Device documents
 var Device = require("../models/device");
+var Activity = require("../models/activity"); 
 
 // Function to generate a random apikey consisting of 32 characters
 function getNewApikey() {
