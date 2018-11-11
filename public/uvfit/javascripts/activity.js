@@ -27,7 +27,7 @@ function activityInfoError(jqXHR, textStatus, errorThrown) {
    if( jqXHR.status === 401 ) {
       console.log("Invalid auth token");
       window.localStorage.removeItem("authToken");
-      window.location.replace("index.html");
+      window.location.replace("signin.html");
    } 
    else {
      $("#error").html("Error: " + status.message);
@@ -40,7 +40,7 @@ $(function() {
    // If there's no authToekn stored, redirect user to 
    // the sign-in page (which is index.html)
    if (!window.localStorage.getItem("authToken")) {
-      window.location.replace("index.html");
+      window.location.replace("signin.html");
    }
    else {
       sendReqForActivityInfo();
