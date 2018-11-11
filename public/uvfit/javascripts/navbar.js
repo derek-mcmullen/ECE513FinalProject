@@ -1,7 +1,7 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("load", function(){
 	var signInButton = document.getElementById("signInButton");
-	var signUpButton = document.getElementById("signInButton");
-	var signOutButton = document.getElementById("signInButton");
+	var signUpButton = document.getElementById("signUpButton");
+	var signOutButton = document.getElementById("signout");
 	var accountMenu = document.getElementById("navbarAccount");
 	
 	if(!window.localStorage.getItem("authToken")){

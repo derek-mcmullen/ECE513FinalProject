@@ -13,11 +13,11 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
    $("#email").html(data.email);
    $("#fullName").html(data.fullName);
    $("#lastAccess").html(data.lastAccess);
-   $("#main").show();
+   
    
    // Add the devices to the list before the list item for the add device button (link)
    for (var device of data.devices) {
-      $("#addDeviceForm").before("<li class='collection-item'>ID: " +
+      $("#removeDeviceControl").before("<li class='collection-item'>ID: " +
         device.deviceId + ", APIKEY: " + device.apikey + "</li>")
    }
 }
@@ -47,9 +47,9 @@ function registerDevice() {
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {
            // Add new device to the device list
-           $("#addDeviceForm").before("<li class='collection-item'>ID: " +
+           $("#removeDeviceControl").before("<li class='list-group-item'>ID: " +
            $("#deviceId").val() + ", APIKEY: " + data["apikey"] + "</li>")
-           hideAddDeviceForm();
+           $("#deviceId").val(""); 
         },
         error: function(jqXHR, textStatus, errorThrown) {
             var response = JSON.parse(jqXHR.responseText);
@@ -62,8 +62,6 @@ function registerDevice() {
 // Show add device form and hide the add device button (really a link)
 function showAddDeviceForm() {
    $("#deviceId").val("");           // Clear the input for the device ID
-   $("#addDeviceControl").hide();    // Hide the add device link
-   $("#addDeviceForm").slideDown();  // Show the add device form
 }
 
 // Hides the add device form and shows the add device button (link)
@@ -85,7 +83,5 @@ $(function() {
    }
    
    // Register event listeners
-   $("#addDevice").click(showAddDeviceForm);
-   $("#registerDevice").click(registerDevice);   
-   $("#cancel").click(hideAddDeviceForm);   
+   $("#registerDevice").click(registerDevice);    
 });

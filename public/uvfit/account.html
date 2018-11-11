@@ -10,20 +10,17 @@
     <title>UVFit - My Account</title>
 
     <!-- Bootstrap core CSS -->
-
 	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="stylesheets/signin.css" rel="stylesheet">
 	<link href="stylesheets/navbar.css" rel="stylesheet">
-  	<script src="/uvfit/javascripts/signin.js" defer></script>
 	<link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
 	<script src="/uvfit/javascripts/status.js" defer></script>
 	<script src="/uvfit/javascripts/signout.js" defer></script>
 	</head>
 
   <body> 
-	   <!-- Navigation -->
+    <!-- Navigation -->
 	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
 		<img class="" src="images/logo.png" alt="logo" width="52" height="52">
@@ -43,7 +40,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Account
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+              <div class="dropdown-menu dropdown-menu-right" >
                 <a class="dropdown-item" href="account.html">My Account</a>
                 <a class="dropdown-item" href="activity.html">Activity Data</a>
               </div>
@@ -55,7 +52,7 @@
               <a class="nav-link btn-secondary text-center" href="register.html" id="signUpButton">Sign Up</a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link btn-primary text-center" href="signout.html" id="signOutButton">Sign Out</a>
+              <a class="nav-link btn-primary text-center" href="signout.html" id="signout">Sign Out</a>
             </li> 
           </ul>
         </div>
@@ -80,21 +77,21 @@
   			</li>
 		</ul>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane fade in active" id="device">
+				<div role="tabpanel" class="tab-pane active" id="device">
   					<li class="list-group-item"> 
-						<label for="deviceId">Device ID:</label>
+						<label for="deviceId" class="h5">List of all registered devices </label>
 					</li>
+					<li class="list-group-item" id="removeDeviceControl"><a href="#!" id="removeDevice">Remove Device</a></li>
 				</div>
 				<div role="tabpanel" class="tab-pane fade" id="newdevice">
   					<li class="list-group-item"> 
 						<label for="deviceId">New Device ID:</label>
 						<input type="text" id="deviceId" name="deviceId" col="30">
-						<button id="registerDevice" class=" btn">Register</button> 
-						<button id="cancel" class=" btn">Cancel</button>
+						<div class="mt-3">
+							<button id="registerDevice" class="btn-primary text-center">Register</button>
+						</div>
 					</li>
-  					<li class="list-group-item" id="addDeviceControl"><a href="#!" id="addDevice">Add Device</a></li>
 				</div>
-				
 			</div>
 		</ul>	  
 	  	<div class='text-danger' id="error"></div>

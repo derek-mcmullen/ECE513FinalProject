@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-   document.getElementById('signout').addEventListener('click', function() {
+   document.getElementById("signout").addEventListener("click", function() {
       window.localStorage.removeItem("authToken");
-      window.location = "signin.html";
+      window.location.replace = "signin.html";
    });
 });
