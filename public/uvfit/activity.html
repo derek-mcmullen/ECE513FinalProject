@@ -1,64 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-	 <title>UVFIT - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/logo.png">
 
-	 <!-- Import Google Icon Font -->
-	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	 <!-- Import materialize.css -->
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">	
-	 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <title>UVFit - My Activity</title>
 
-	 <link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
-	 <script src="/uvfit/javascripts/status.js" defer></script>
-	 <script src="/uvfit/javascripts/signout.js" defer></script>
-	 <script src="/uvfit/javascripts/activity.js" defer></script>
+    <!-- Bootstrap core CSS -->
 
-	 <!-- Let browser know website is optimized for mobile -->
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
+	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	  
+	<style>
+		#listItems {overflow:hidden; overflow-y:scroll;}
+		#listItems {height:65vh; }
+	  </style>
 
-<body>
-	<!-- Dropdown Structure -->
-	<ul id="dropdown1" class="dropdown-content">
-		<li><a href="home.html">Home</a></li>
-		<li><a href="activity.html">Activity Data</a></li>
-		<li><a href="delete.html">Delete Data</a></li>
-		<li class="divider"></li>
-		<li><a href="#!" id="signout">Sign out</a></li>
-	</ul>
-	<nav>
-		<div class="nav-wrapper blue-grey darken-2">
-			<a href="home.html" class="brand-logo left"><img id="logo" src="images/logo.png"><span id="name">UVFit</span></a>
-			<ul class="right ">
-				<!-- Dropdown Trigger -->
-				<li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">more_vert</i></a></li>
-			</ul>
-		</div>
-	</nav>
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/signin.css" rel="stylesheet">
+	<link href="stylesheets/navbar.css" rel="stylesheet">
+	<link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
+	<script src="/uvfit/javascripts/navbar.js"></script>
+	<script src="/uvfit/javascripts/status.js" defer></script>
+	<script src="/uvfit/javascripts/signout.js" defer></script>
+	<script src="/uvfit/javascripts/activity.js" defer></script>
+	<script src="javascripts/jquery/jquery.min.js"></script>
+    <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</head>
 
-	<div class="row" id="main">
-		<div class="col s12 m12" id="activityDiv">
-			<h4> Enter DeviceID: </h4>
-			<input type="text" id="desiredDevice" default="123"> 
-			<ul class="collection with-header">
-				<li class="collection-header" id="activityHeader">
-					<h5>Activity Data</h5>
-				</li>
+  <body>
+	  
+    <!-- Navigation -->
+	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+		<img class="" src="images/logo.png" alt="logo" width="52" height="52">
+        <a class="navbar-brand" href="index.html" id="navLogo">UVFit</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" >
+                <a class="dropdown-item" href="account.html">My Account</a>
+                <a class="dropdown-item" href="activity.html">Activity Data</a>
+              </div>
+            </li>
+			  <li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signInButton">Sign In</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-secondary text-center" href="register.html" id="signUpButton">Sign Up</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signout">Sign Out</a>
+            </li> 
+          </ul>
+        </div>
+      </div>
+    </nav>
+	  
+	  
+	<div class="row col-12" id="main">
+		<div class="col-12" id="activityDiv">
+			<h3> Enter Device ID: </h3>
+			<input type="text" class="form-control mb-3" id="desiredDevice" placeholder="Enter the Device ID" default="123"> 
+			<ul class="list-group">
+					<h5 id="activityHeader">Activity Data</h5>
 				<span id="listItems"></span>
 			</ul>
-				<div class='red-text text-darken-2' id="error"></div>
+				<div class='text-danger' id="error"></div>
 		</div>
 	</div>
   </body>
-
-  <!-- Initialize dropdown menu in materialize -->
-  <script>
-    $(document).ready(function() {
-		$(".dropdown-button").dropdown();
-	 })
-  </script>
-
 </html>
