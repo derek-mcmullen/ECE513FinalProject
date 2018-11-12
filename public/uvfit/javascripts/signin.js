@@ -19,7 +19,7 @@ function signinResponse() {
   else {
     // Use a span with dark red text for errors
     var responseDiv = document.getElementById("ServerResponse");
-    var responseHTML = "<span class='red-text text-darken-2'>";
+    var responseHTML = "<span class='text-danger'>";
     responseHTML += "Error: " + this.response.error;
     responseHTML += "</span>"
     responseDiv.innerHTML = responseHTML;
