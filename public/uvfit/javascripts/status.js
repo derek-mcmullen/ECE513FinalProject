@@ -35,6 +35,12 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
      $("#error").show();
    } 
 }
+// populate the device list
+function getMyDevices() { 
+	
+
+
+}
 
 // Registers the specified device with the server.
 function registerDevice() {

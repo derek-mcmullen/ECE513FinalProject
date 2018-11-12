@@ -9,11 +9,17 @@ function sendReqForActivityInfo(deviceId) {
    });
 }
 
-function activityInfoSuccess(data, textSatus, jqXHR) {
-   var prepString = ""; 
-    for (var activity of data.activity) {
-      prepString += "<li class='collection-item'>Speed: " + activity.speed + ", UV: " + activity.speed + ", Lat:  " + activity.latitude + ", Long: " + activity.longitude + "</li>"; 
-    }
+function activityInfoSuccess(data, textStatus, jqXHR) {
+  
+   if( !data.activity.length) { 
+	prepString = "<li class='collection-item'>No activity data for this device!"; 
+   } else {  
+   	var prepString = ""; 
+    	for (var activity of data.activity) {
+      		prepString += "<li class='collection-item'>Speed: " + activity.speed + ", UV: " + activity.uv + ", Lat:  " + activity.latitude + ", Long: " + activity.longitude + "</li>"; 
+    		
+	}
+   }
 
    $("#listItems").html(prepString); 
    $("#error").hide();

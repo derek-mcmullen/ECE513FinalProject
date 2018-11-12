@@ -17,6 +17,35 @@ function getNewApikey() {
     return newApikey;
 }
 
+// GET request all devices registered to the current user.
+router.get('/email/:userId', function(req, res, next) {
+    var userId = req.params.userId;
+    var responseJson = { devices: [] };
+
+    if (userId == "all") {
+      var query = {};
+    }
+    else {
+      var query = {
+          "userEmail" : userId
+      };
+    }
+    
+    Device.find(query, function(err, allDevices) {
+      if (err) {
+        var errorMsg = {"message" : err};
+        res.status(400).json(errorMsg);
+      }
+      else {
+         for(var doc of allDevices) {
+            responseJson.devices.push({ "deviceId": doc.deviceId,  "lastContact" : doc.lastContact, "email" : doc.userEmail});
+         }
+      }
+      res.status(200).json(responseJson);
+    });
+});
+
+
 // GET request return one or "all" devices registered and last time of contact.
 router.get('/status/:devid', function(req, res, next) {
     var deviceId = req.params.devid;

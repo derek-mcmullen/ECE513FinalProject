@@ -36,6 +36,7 @@ router.get('/summary/:devid', function(req, res, next) {
     
 });
 
+// Deletion endpoint for clearing out bad database data
 router.post('/delete', function(req, res, next) {  
     Activity.find({ deviceId: req.body.deviceId }).remove().exec(); 
     res.status(200).json({deleted:"yes"}); 
