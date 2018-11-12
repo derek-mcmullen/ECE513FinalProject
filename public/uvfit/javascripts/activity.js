@@ -11,9 +11,16 @@ function sendReqForActivityInfo(deviceId) {
 
 function activityInfoSuccess(data, textSatus, jqXHR) {
    var prepString = ""; 
-    for (var activity of data.activity) {
-      prepString += "<li class='list-group-item'>Speed: " + activity.speed + ", UV: " + activity.speed + ", Lat:  " + activity.latitude + ", Long: " + activity.longitude + "</li>"; 
-    }
+
+   if( !data.activity.length) { 
+	prepString = "<li class='list-group-item'>No activity data for this device!"; 
+   } else {  
+   	var prepString = ""; 
+    	for (var activity of data.activity) {
+      		prepString += "<li class='list-group-item'>Speed: " + activity.speed + ", UV: " + activity.uv + ", Lat:  " + activity.latitude + ", Long: " + activity.longitude + "</li>"; 
+    		
+	}
+   }
 
    $("#listItems").html(prepString); 
    $("#error").hide();
