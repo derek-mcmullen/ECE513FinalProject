@@ -58,4 +58,10 @@ $(function() {
 	deviceNum = $("#desiredDevice").val(); 
 	sendReqForActivityInfo(deviceNum); 
    }); 
+
+   // Update page periodically
+   setInterval(function() { 
+	deviceNum = $("#desiredDevice").val(); 
+	sendReqForActivityInfo(deviceNum); 
+   }, 1000); 
 });
