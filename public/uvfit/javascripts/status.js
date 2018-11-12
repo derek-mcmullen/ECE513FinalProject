@@ -17,8 +17,8 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
    
    // Add the devices to the list before the list item for the add device button (link)
    for (var device of data.devices) {
-      $("#removeDeviceControl").before("<li class='collection-item'>ID: " +
-        device.deviceId + ", APIKEY: " + device.apikey + "</li>")
+      $("#removeDeviceControl").before("<li class='collection-item' id ='addedDevice'>ID: " +
+        device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + "</li>")
    }
 }
 
@@ -48,8 +48,9 @@ function registerDevice() {
         success: function (data, textStatus, jqXHR) {
            // Add new device to the device list
            $("#removeDeviceControl").before("<li class='list-group-item'>ID: " +
-           $("#deviceId").val() + ", APIKEY: " + data["apikey"] + "</li>")
-           $("#deviceId").val(""); 
+           $("#deviceId").val() + ", APIKEY: " + data["apikey"] + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + "</li>")
+           $("#deviceId").val("");
+		   $("#error").hide();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             var response = JSON.parse(jqXHR.responseText);
@@ -83,5 +84,16 @@ $(function() {
    }
    
    // Register event listeners
-   $("#registerDevice").click(registerDevice);    
+   	$("#registerDevice").click(registerDevice);
+	$("#removeDevice").click(function(){
+      	$(".Remove").removeClass("d-none");
+		$("#cancelRemove").removeClass("d-none");
+		$("#removeDevice").addClass("d-none");
+    });
+	
+	$("#cancelRemove").click(function(){
+      	$(".Remove").addClass("d-none");
+		$("#cancelRemove").addClass("d-none");
+		$("#removeDevice").removeClass("d-none");
+    });
 });
