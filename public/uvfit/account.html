@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/logo.png">
+
+    <title>UVFit - My Account</title>
+
+    <!-- Bootstrap core CSS -->
+	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/signin.css" rel="stylesheet">
+	<link href="stylesheets/navbar.css" rel="stylesheet">
+	<link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
+	<script src="/uvfit/javascripts/status.js" defer></script>
+	<script src="/uvfit/javascripts/signout.js" defer></script>
+	<script src="/uvfit/javascripts/navbar.js" defer></script>
+	<script src="javascripts/jquery/jquery.min.js"></script>
+    <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</head>
+
+  <body> 
+    <!-- Navigation -->
+	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+		<img class="" src="images/logo.png" alt="logo" width="52" height="52">
+        <a class="navbar-brand" href="index.html" id="navLogo">UVFit</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" >
+                <a class="dropdown-item" href="account.html">My Account</a>
+                <a class="dropdown-item" href="activity.html">Activity Data</a>
+              </div>
+            </li>
+			  <li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signInButton">Sign In</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-secondary text-center" href="register.html" id="signUpButton">Sign Up</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signout">Sign Out</a>
+            </li> 
+          </ul>
+        </div>
+      </div>
+    </nav>
+	<div class="row col-12">
+	<div class="col-12">
+		<ul class="list-group">
+			<h3>Account Details</h3>
+  			<li class="list-group-item">Email Address: <span id="email"></span></li>
+  			<li class="list-group-item">Name: <span id="fullName"></span></li>
+  			<li class="list-group-item">Last Access: <span id="lastAccess"></span></li>
+		</ul>
+		<ul class="list-group" id="devices">
+			<h3>Devices</h3>
+			<ul class="nav nav-tabs nav-fill" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" href="#device" role="tab" data-toggle="tab">My Devices</a>
+			</li>
+			<li class="nav-item">
+    			<a class="nav-link" href="#newdevice" role="tab" data-toggle="tab">Add Device</a>
+  			</li>
+		</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="device">
+					<div id="addIdHere">
+  					<li class="list-group-item"> 
+						<label for="deviceId" class="h5">List of all registered devices </label>
+					</li>
+					</div>
+					<li class="list-group-item" id="removeDeviceControl"><a class="" href="#!" id="removeDevice">Remove Device(s)</a><a class="d-none" href="#!" id="cancelRemove">Cancel</a></li>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="newdevice">
+  					<li class="list-group-item"> 
+						<label for="deviceId">New Device ID:</label>
+						<input type="text" id="deviceId" name="deviceId" col="30">
+						<div class="mt-3">
+							<button id="registerDevice" class="btn-primary text-center">Register</button>
+						</div>
+					</li>
+				</div>
+			</div>
+		</ul>	  
+	  	<div class='text-danger' id="error"></div>
+	</div>
+	</div>
+  </body>
+</html>

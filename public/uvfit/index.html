@@ -1,52 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
+
     <meta charset="utf-8">
-    <title>UVFit - Sign in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="icon" href="images/logo.png">
 
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
-    
-    <link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
-    <script src="/uvfit/javascripts/signin.js" defer></script>
-
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Home - UVFit</title>
+    <!-- Bootstrap core CSS -->
+    <link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/modern-business.css" rel="stylesheet">
+	<link href="stylesheets/navbar.css" rel="stylesheet">
+	<script src="/uvfit/javascripts/navbar.js" defer></script>
+	<script src="/uvfit/javascripts/signout.js" defer></script>
+	<script src="javascripts/jquery/jquery.min.js"></script>
+    <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
   </head>
 
   <body>
-    <nav>
-      <div class="nav-wrapper blue-grey darken-2">
-      	<a href="home.html" class="brand-logo left"><img id="logo" src="images/logo.png"><span id="name">UVFit</span></a>
+    <!-- Navigation -->
+	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+		<img class="" src="images/logo.png" alt="logo" width="52" height="52">
+        <a class="navbar-brand" href="index.html" id="navLogo">UVFit</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" >
+                <a class="dropdown-item" href="account.html">My Account</a>
+                <a class="dropdown-item" href="activity.html">Activity Data</a>
+              </div>
+            </li>
+			  <li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signInButton">Sign In</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-secondary text-center" href="register.html" id="signUpButton">Sign Up</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link btn-primary text-center" href="signin.html" id="signout">Sign Out</a>
+            </li> 
+          </ul>
+        </div>
       </div>
     </nav>
 
-    <div class="row">
-      <div class="col s12 m6">
-        <div class="card blue-grey ">
-          <div class="card-content white-text">
-            <span class="card-title">Sign in</span>
-            <div class="input-field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" >
+    <header>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <!-- Slide One - Set the background image for this slide in the line below -->
+          <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>First Slide</h3>
+              <p>This is a description for the first slide.</p>
             </div>
-              <div class="input-field">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" >
-              </div>
-              <div class="card-action">
-                <div><button id="signin" class="waves-effect waves-light btn">Sign in</button></div>
-                <div id="account">Need an account? <a href="register.html">Register</a></div>
-              </div>
           </div>
-          <div class="card-panel blue-text" id="ServerResponse" style="display: none"></div>
+          <!-- Slide Two - Set the background image for this slide in the line below -->
+          <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>Second Slide</h3>
+              <p>This is a description for the second slide.</p>
+            </div>
+          </div>
+          <!-- Slide Three - Set the background image for this slide in the line below -->
+          <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>Third Slide</h3>
+              <p>This is a description for the third slide.</p>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </header>	  
+	  
+	  
+    <!-- Page Content -->
+    <div class="container">
+
+      <h1 class="my-4">Welcome to UV Fit</h1>
+<!-- Features Section -->
+      <div class="row">
+        <div class="col-lg-6">
+          <h2>UV Fit Activity Tracker</h2>
+          <p>The UV Fit Activity Tracker includes:</p>
+          <ul>
+            <li>
+              <strong>UV Fit</strong>
+            </li>
+            <li>UV Sunlight Tracking</li>
+            <li>GPS Tracking</li>
+            <li>Online interface to view your activity</li>
+            <li>Many other Features</li>
+          </ul>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+        </div>
+        <div class="col-lg-6">
+          <img class="img-fluid rounded" src="http://placehold.it/700x450" alt="">
         </div>
       </div>
+      <!-- /.row -->
+
+      <hr>
+
+      <!-- Call to Action Section -->
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
+        </div>
+        <div class="col-md-4">
+          <a class="btn btn-lg btn-secondary btn-block" href="#">Call to Action</a>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.container -->
+	  <div class="container">
+      <!-- Marketing Icons Section -->
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 class="card-header">Sign Up Today</h4>
+            <div class="card-body">
+              <p class="card-text">Sign up now to start using your UV Fit Activity Tracker!</p>
+            </div>
+            <div class="card-footer">
+              <a href="register.html" class="btn btn-primary">Sign Up Here!</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 class="card-header">About UV Fit</h4>
+            <div class="card-body">
+              <p class="card-text"></p>
+            </div>
+            <div class="card-footer">
+              <a href="about.html" class="btn btn-primary">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 class="card-header">Contact Us</h4>
+            <div class="card-body">
+              <p class="card-text">If you have any technical issues with your UV Fit Activity Tracker, please contact us.</p>
+            </div>
+            <div class="card-footer">
+              <a href="contact.html" class="btn btn-primary">Contact Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+	  </div>
+      <!-- /.row -->
+      
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; UVFit 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
   </body>
+
 </html>
