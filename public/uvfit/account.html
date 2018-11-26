@@ -10,14 +10,18 @@
     <title>UVFit - My Account</title>
 
     <!-- Bootstrap core CSS -->
+	<link href="stylesheets/modern-business.css" rel="stylesheet">
 	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template -->
     <link href="stylesheets/signin.css" rel="stylesheet">
 	<link href="stylesheets/navbar.css" rel="stylesheet">
+	<link href="stylesheets/account.css" rel="stylesheet">
 	<link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
-	<script src="/uvfit/javascripts/status.js" defer></script>
 	<script src="/uvfit/javascripts/signout.js" defer></script>
 	<script src="/uvfit/javascripts/navbar.js" defer></script>
+	<script src="/uvfit/javascripts/status.js" defer></script>
+	<script src="/uvfit/javascripts/account.js" defer></script>
 	<script src="javascripts/jquery/jquery.min.js"></script>
     <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
 	</head>
@@ -68,6 +72,27 @@
   			<li class="list-group-item">Email Address: <span id="email"></span></li>
   			<li class="list-group-item">Name: <span id="fullName"></span></li>
   			<li class="list-group-item">Last Access: <span id="lastAccess"></span></li>
+			<li class="list-group-item"><div class="mb-3">User UV Threshold:<button class="btn ml-2" id="UVInfoButton"><i class="fa fa-info-circle" style="font-size:20px"></i></button></div> 
+				<!-- The Modal -->
+				<div id="myModal" class="modal">
+  					<!-- Modal content -->
+  					<div class="modal-content">
+    					<span class="close">&times;</span>
+    					<p>Some text in the Modal..</p>
+  					</div>
+
+				</div>
+				<div class="range mb-4">
+					<input type="range" min="0" max="1000" step="20" value="500" class="slider" id="UVThreshold">
+					<div class="ticks">
+						<span class="tick">No Sensitivity</span>
+						<span class="tick">Little Sensitivty</span>
+    					<span class="tick">Average Sensitvity</span>
+    					<span class="tick">High Sensitivity</span>
+						<span class="tick">Extreme Sensitivity</span>
+					</div>
+				</div>
+			</li>
 		</ul>
 		<ul class="list-group" id="devices">
 			<h3>Devices</h3>
@@ -99,7 +124,7 @@
 				</div>
 			</div>
 		</ul>	  
-	  	<div class='text-danger' id="error"></div>
+	  	<div class="text-danger" id="error"></div>
 	</div>
 	</div>
   </body>
