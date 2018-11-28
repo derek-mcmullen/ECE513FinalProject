@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
 	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="stylesheets/signin.css" rel="stylesheet">
@@ -26,7 +27,7 @@
   <body>
 	  
      <!-- Navigation -->
-	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
 		<img class="" src="images/logo.png" alt="logo" width="52" height="52">
         <a class="navbar-brand" href="index.html" id="navLogo">UVFit</a>
@@ -41,15 +42,21 @@
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact Us</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" id="navbarAccount" href="account.html">My Account</a>
+            </li>  
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Account
+              <a class="nav-link dropdown-toggle" href="#" id="navbarActivity" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                My Activity
               </a>
               <div class="dropdown-menu dropdown-menu-right" >
-                <a class="dropdown-item" href="account.html">My Account</a>
-                <a class="dropdown-item" href="activity.html">Activity Data</a>
+                <a class="dropdown-item" href="activitysummary.html">Activity Summary</a>
+                <a class="dropdown-item" href="activity.html">Activity Details</a>
               </div>
             </li>
+			  <li class="nav-item">
+              <a class="nav-link" href="activitycommunity.html">Community Activity<i class="fas fa-users"></i></a>
+            </li> 
 			  <li class="nav-item">
               <a class="nav-link btn-primary text-center" href="signin.html" id="signInButton">Sign In</a>
             </li>

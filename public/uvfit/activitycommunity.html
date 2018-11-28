@@ -9,7 +9,7 @@
     <meta name="author" content="">
 	<link rel="icon" href="images/logo.png">
 
-    <title>About - UVFit</title>
+    <title>UVFit - Community Activity</title>
 
     <!-- Bootstrap core CSS -->
     <link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -72,19 +72,377 @@
     </nav>
 	  
     <!-- Page Content -->
-    <div class="container">
+    <div class="row col-12">
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="mt-4 mb-3">Community Activity</h1>
       <!-- Intro Content -->
-      	<div class="row">
-        	<div class="col-lg-12" id="">
-          		<h2>Local Data View</h2>
-        	</div>
+      <div class="col-lg-12" id="">
+        <h2>Local Data View</h2>
+		<div class="form-inline col-12 mb-3">
+			<h5 class="mr-2">Find Local Users within</h5>
+    		<select class="form-control" id="exampleFormControlSelect1">
+      			<option>1</option>
+      			<option>2</option>
+      			<option>3</option>
+      			<option>4</option>
+      			<option>5</option>
+    		</select>
+			<h5 class="ml-1 mr-2">miles of</h5>
+			<h5 class="mr-2"> zipcode: </h5>
+			<input class="form-control col-2" id="zipcode" placeholder="Enter Zipcode" type="text">
 		</div>
-		<div class="row">
-			<div class="col-lg-12" id="">
-         		<h2>All UVFit Users</h2>
+		  
+			<ul class="nav nav-tabs nav-fill" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" href="#activityAllTab" role="tab" data-toggle="tab">All Activity</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link" href="#activityWalkingTab" role="tab" data-toggle="tab">Walking</a>
+  				</li>
+				<li class="nav-item">
+    				<a class="nav-link" href="#activityRunningTab" role="tab" data-toggle="tab">Running</a>
+  				</li>
+				<li class="nav-item">
+    				<a class="nav-link" href="#activityBikingTab" role="tab" data-toggle="tab">Biking</a>
+  				</li>
+			</ul>
+       </div>
+		<div class="tab-content col-12">
+				<div role="tabpanel" class="tab-pane active" id="activityAllTab">
+					
+				</div>
+  				<div role="tabpanel" class="tab-pane fade" id="activityWalkingTab">
+					<div class="mt-2" id="tableActivityWalking">
+						<table id="activityWalkingTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  						<thead>
+    						<tr>
+      							<th class="th-sm">Device ID
+      							</th>
+								<th class="th-sm">Number of Activites
+      							</th>
+      							<th class="th-sm">Average Duration of Activity
+      							</th>
+      							<th class="th-sm">Average Calories Burned
+      							</th>
+      							<th class="th-sm">Average UV Exposure
+      							</th>
+      							<th class="th-sm">Average Speed
+      							</th>
+   			 				</tr>
+  						</thead>
+						<tbody>
+							<span id="activityWalkingTableData"></span>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+  				<div role="tabpanel" class="tab-pane fade" id="activityRunningTab">
+					<div class="mt-2" id="tableActivityRunning">
+						<table id="activityRunningTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  						<thead>
+    						<tr>
+      							
+      							<th class="th-sm">Device ID
+      							</th>
+								<th class="th-sm">Number of Activites
+      							</th>
+      							<th class="th-sm">Average Duration of Activity
+      							</th>
+      							<th class="th-sm">Average Calories Burned
+      							</th>
+      							<th class="th-sm">Average UV Exposure
+      							</th>
+      							<th class="th-sm">Average Speed
+      							</th>
+   			 				
+   			 				</tr>
+						</thead>
+						<tbody>
+							<span id="activityRunningTableData"></span>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+  				<div role="tabpanel" class="tab-pane fade" id="activityBikingTab">
+					<div class="mt-2" id="tableActivityBiking">
+						<table id="activityBikingTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  						<thead>
+    						<tr>
+      							<th class="th-sm">Device ID
+      							</th>
+								<th class="th-sm">Number of Activites
+      							</th>
+      							<th class="th-sm">Average Duration of Activity
+      							</th>
+      							<th class="th-sm">Average Calories Burned
+      							</th>
+      							<th class="th-sm">Average UV Exposure
+      							</th>
+      							<th class="th-sm">Average Speed
+      							</th>
+   			 				</tr>
+  						</thead>
+						<tbody>
+							<span id="activityBikingTableData"></span>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+							<tr>
+      							<td>12/23/15</td>
+      							<td>5</td>
+      							<td>61</td>
+      							<td>3</td>
+      							<td>6.8</td>
+    						</tr>
+    						<tr>
+      							<td>12/25/15</td>
+      							<td>6</td>
+      							<td>63</td>
+      							<td>1</td>
+      							<td>2.1</td>
+    						</tr>
+							<tr>
+      							<td>12/27/15</td>
+      							<td>7</td>
+      							<td>61</td>
+      							<td>2</td>
+      							<td>0.8</td>
+    						</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
+		<div class="col-lg-12" id="">
+         	<h2>All UVFit Users</h2>
 		</div>
       </div>
     <!-- /.container -->
@@ -96,6 +454,15 @@
       </div>
       <!-- /.container -->
     </footer>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+	<script>
+		$('#activityAllTable').dataTable();
+		$('#activityWalkingTable').dataTable();
+		$('#activityRunningTable').dataTable();
+		$('#activityBikingTable').dataTable();
+	  </script>
   </body>
 
 </html>
