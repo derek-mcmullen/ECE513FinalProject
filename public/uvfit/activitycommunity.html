@@ -1,35 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="images/logo.png">
+	<link rel="icon" href="images/logo.png">
 
-    <title>UVFit - Activity Details</title>
+    <title>UVFit - Community Activity</title>
 
     <!-- Bootstrap core CSS -->
-	<link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">  
 
-    <!-- Custom styles for this template -->  
-	<link href="stylesheets/modern-business.css" rel="stylesheet">
-    <link href="stylesheets/signin.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/modern-business.css" rel="stylesheet">
 	<link href="stylesheets/navbar.css" rel="stylesheet">
-	<link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
-	<script src="/uvfit/javascripts/navbar.js"></script>
-	<script src="/uvfit/javascripts/status.js"></script>
+	<script src="/uvfit/javascripts/navbar.js" defer></script>
 	<script src="/uvfit/javascripts/signout.js" defer></script>
-	<script src="/uvfit/javascripts/activity.js" defer></script>
 	<script src="javascripts/jquery/jquery.min.js"></script>
     <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-	</head>
+  </head>
 
   <body>
-	  
+
      <!-- Navigation -->
 	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -75,11 +71,27 @@
       </div>
     </nav>
 	  
-	  
-	<div class="row col-12" id="main">
-		<div class="col-12" id="activityDiv">
-			<h3> Enter Device ID: </h3>
-			<input type="text" class="form-control mb-3" id="desiredDevice" placeholder="Enter the Device ID" default="123">
+    <!-- Page Content -->
+    <div class="row col-12">
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3">Community Activity</h1>
+      <!-- Intro Content -->
+      <div class="col-lg-12" id="">
+        <h2>Local Data View</h2>
+		<div class="form-inline col-12 mb-3">
+			<h5 class="mr-2">Find Local Users within</h5>
+    		<select class="form-control" id="exampleFormControlSelect1">
+      			<option>1</option>
+      			<option>2</option>
+      			<option>3</option>
+      			<option>4</option>
+      			<option>5</option>
+    		</select>
+			<h5 class="ml-1 mr-2">miles of</h5>
+			<h5 class="mr-2"> zipcode: </h5>
+			<input class="form-control col-2" id="zipcode" placeholder="Enter Zipcode" type="text">
+		</div>
+		  
 			<ul class="nav nav-tabs nav-fill" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" href="#activityAllTab" role="tab" data-toggle="tab">All Activity</a>
@@ -94,142 +106,27 @@
     				<a class="nav-link" href="#activityBikingTab" role="tab" data-toggle="tab">Biking</a>
   				</li>
 			</ul>
-			<div class="tab-content">
+       </div>
+		<div class="tab-content col-12">
 				<div role="tabpanel" class="tab-pane active" id="activityAllTab">
-					<div class="mt-2" id="tableActivityAll">
-						<table id="activityAllTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-  						<thead>
-    						<tr>
-      							<th class="th-sm">Activty Type
-      							</th>
-      							<th class="th-sm">Date of Actvity
-      							</th>
-      							<th class="th-sm">Duration of Activity
-      							</th>
-      							<th class="th-sm">Calories Burned
-      							</th>
-      							<th class="th-sm">UV Exposure
-      							</th>
-      							<th class="th-sm">Speed
-      							</th>
-   			 				</tr>
-  						</thead>
-						<tbody>
-							<span id="activityAllTableData"></span>
-							<tr>
-      							<td>Biking</td>
-      							<td>12/23/15</td>
-      							<td>5</td>
-      							<td>61</td>
-      							<td>3</td>
-      							<td>6.8</td>
-    						</tr>
-    						<tr>
-     	 						<td>Running</td>
-      							<td>12/25/15</td>
-      							<td>6</td>
-      							<td>63</td>
-      							<td>1</td>
-      							<td>2.1</td>
-    						</tr>
-							<tr>
-      							<td>Walking</td>
-      							<td>12/27/15</td>
-      							<td>7</td>
-      							<td>61</td>
-      							<td>2</td>
-      							<td>0.8</td>
-    						</tr>
-							<tr>
-      							<td>Biking</td>
-      							<td>12/23/15</td>
-      							<td>5</td>
-      							<td>61</td>
-      							<td>3</td>
-      							<td>6.8</td>
-    						</tr>
-    						<tr>
-     	 						<td>Running</td>
-      							<td>12/25/15</td>
-      							<td>6</td>
-      							<td>63</td>
-      							<td>1</td>
-      							<td>2.1</td>
-    						</tr>
-							<tr>
-      							<td>Walking</td>
-      							<td>12/27/15</td>
-      							<td>7</td>
-      							<td>61</td>
-      							<td>2</td>
-      							<td>0.8</td>
-    						</tr>
-							<tr>
-      							<td>Biking</td>
-      							<td>12/23/15</td>
-      							<td>5</td>
-      							<td>61</td>
-      							<td>3</td>
-      							<td>6.8</td>
-    						</tr>
-    						<tr>
-     	 						<td>Running</td>
-      							<td>12/25/15</td>
-      							<td>6</td>
-      							<td>63</td>
-      							<td>1</td>
-      							<td>2.1</td>
-    						</tr>
-							<tr>
-      							<td>Walking</td>
-      							<td>12/27/15</td>
-      							<td>7</td>
-      							<td>61</td>
-      							<td>2</td>
-      							<td>0.8</td>
-    						</tr>
-							<tr>
-      							<td>Biking</td>
-      							<td>12/23/15</td>
-      							<td>5</td>
-      							<td>61</td>
-      							<td>3</td>
-      							<td>6.8</td>
-    						</tr>
-    						<tr>
-     	 						<td>Running</td>
-      							<td>12/25/15</td>
-      							<td>6</td>
-      							<td>63</td>
-      							<td>1</td>
-      							<td>2.1</td>
-    						</tr>
-							<tr>
-      							<td>Walking</td>
-      							<td>12/27/15</td>
-      							<td>7</td>
-      							<td>61</td>
-      							<td>2</td>
-      							<td>0.8</td>
-    						</tr>
-						</tbody>
-						</table>
-					</div>
+					
 				</div>
   				<div role="tabpanel" class="tab-pane fade" id="activityWalkingTab">
 					<div class="mt-2" id="tableActivityWalking">
 						<table id="activityWalkingTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   						<thead>
     						<tr>
-      							<th class="th-sm">Date of Actvity
+      							<th class="th-sm">Device ID
       							</th>
-      							<th class="th-sm">Duration of Activity
+								<th class="th-sm">Number of Activites
       							</th>
-      							<th class="th-sm">Calories Burned
+      							<th class="th-sm">Average Duration of Activity
       							</th>
-      							<th class="th-sm">UV Exposure
+      							<th class="th-sm">Average Calories Burned
       							</th>
-      							<th class="th-sm">Speed
+      							<th class="th-sm">Average UV Exposure
+      							</th>
+      							<th class="th-sm">Average Speed
       							</th>
    			 				</tr>
   						</thead>
@@ -328,16 +225,20 @@
 						<table id="activityRunningTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   						<thead>
     						<tr>
-      							<th class="th-sm">Date of Actvity
+      							
+      							<th class="th-sm">Device ID
       							</th>
-      							<th class="th-sm">Duration of Activity
+								<th class="th-sm">Number of Activites
       							</th>
-      							<th class="th-sm">Calories Burned
+      							<th class="th-sm">Average Duration of Activity
       							</th>
-      							<th class="th-sm">UV Exposure
+      							<th class="th-sm">Average Calories Burned
       							</th>
-      							<th class="th-sm">Speed
+      							<th class="th-sm">Average UV Exposure
       							</th>
+      							<th class="th-sm">Average Speed
+      							</th>
+   			 				
    			 				</tr>
 						</thead>
 						<tbody>
@@ -435,15 +336,17 @@
 						<table id="activityBikingTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   						<thead>
     						<tr>
-      							<th class="th-sm">Date of Actvity
+      							<th class="th-sm">Device ID
       							</th>
-      							<th class="th-sm">Duration of Activity
+								<th class="th-sm">Number of Activites
       							</th>
-      							<th class="th-sm">Calories Burned
+      							<th class="th-sm">Average Duration of Activity
       							</th>
-      							<th class="th-sm">UV Exposure
+      							<th class="th-sm">Average Calories Burned
       							</th>
-      							<th class="th-sm">Speed
+      							<th class="th-sm">Average UV Exposure
+      							</th>
+      							<th class="th-sm">Average Speed
       							</th>
    			 				</tr>
   						</thead>
@@ -538,9 +441,19 @@
 					</div>
 				</div>
 			</div>
-				<div class="text-danger" id="error"></div>
+		<div class="col-lg-12" id="">
+         	<h2>All UVFit Users</h2>
 		</div>
-	</div>
+      </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; UV Fit 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -551,4 +464,5 @@
 		$('#activityBikingTable').dataTable();
 	  </script>
   </body>
+
 </html>

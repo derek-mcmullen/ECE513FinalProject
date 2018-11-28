@@ -13,12 +13,11 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
    $("#email").html(data.email);
    $("#fullName").html(data.fullName);
    $("#lastAccess").html(data.lastAccess);
-   
-   
    // Add the devices to the list before the list item for the add device button (link)
    for (var device of data.devices) {
-      $("#removeDeviceControl").before("<li class='collection-item' id ='addedDevice'>ID: " +
-        device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + "</li>")
+      $("#removeDeviceControl").before("<li class='list-group-item' id ='addedDevice'>ID: " +
+        device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + 
+		"</li>")
    }
 }
 

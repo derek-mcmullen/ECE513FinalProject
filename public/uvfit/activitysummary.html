@@ -9,15 +9,17 @@
     <meta name="author" content="">
 	<link rel="icon" href="images/logo.png">
 
-    <title>UVFit - About</title>
+    <title>UVFit - Activity Summary</title>
 
     <!-- Bootstrap core CSS -->
     <link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">  
 
     <!-- Custom styles for this template -->
     <link href="stylesheets/modern-business.css" rel="stylesheet">
+	<link href="stylesheets/activitysummary.css" rel="stylesheet">  
 	<link href="stylesheets/navbar.css" rel="stylesheet">
+	<script src="/uvfit/javascripts/status.js"></script>
 	<script src="/uvfit/javascripts/navbar.js" defer></script>
 	<script src="/uvfit/javascripts/signout.js" defer></script>
 	<script src="javascripts/jquery/jquery.min.js"></script>
@@ -70,74 +72,98 @@
         </div>
       </div>
     </nav>
-
+	  
     <!-- Page Content -->
-    <div class="container">
-
+    <div class="container-fluid">
       <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">About
-        <small>UV Fit</small>
+      <h1 class="mt-4 mb-3 pt-2">Recent Activity 
+        <small>| Past 7 Days</small>
       </h1>
-
+		<p>Activity data is from: to </p>
       <!-- Intro Content -->
-      <div class="row">
-        <div class="col-lg-6">
-          <img class="img-fluid rounded mb-4" src="http://placehold.it/750x450" alt="">
+      <div class="row justify-content-md-center mt-4 pt-4">
+        <div class="col-lg-3 mr-4 mb-3 ml-4" id="walkingSummary">
+          <h2><img src="images/walkingLeft.png" alt="walking man" height="42" width="31"><a class="activityDetails" href="activity.html">Walking</a><img src="images/walkingRight.png" alt="walking man" height="42" width="31"></h2>
+			<div class="row mb-3">
+				<div class="col-8 totals" >
+					Total Activity Time:
+				</div>
+				<div class="col-4">
+				<span id="totalWalkingTime"></span>Minutes
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-8 totals">
+					Total Calories Burned:
+				</div>
+				<div class="col-4">
+				<span id="totalWalkingCalories"></span>Calories
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-8 totals">
+					Total UV-Exposure:
+				</div>
+				<div class="col-4">
+				<span id="totalWalkingUV"></span>UV Rating
+				</div>
+			</div>
         </div>
-        <div class="col-lg-6">
-          <h2>About UV Fit</h2>
-          <p>This is the beginnings of a fully functioning web portal that will support the access and modification of UVFit devices. We are creating this web page for ECE 513 at the University of Arizona</p>
-          <p>UVFit is a IoT connected device built on the photon microcontroller. It interfaces with a UV sensor and GPS unit to collect Location, Speed, and UV readings for a user tracking their activity levels.</p>
-          <p>It provides a user with the ability to initiate an activity from the device and remotely log all relevant data. The server is then able to calculate activity summaries while providing an easy to use interface for tracking a users route!</p>
+        <div class="col-lg-3 mr-4 mb-3 ml-4" id="runningSummary">
+          <h2><img src="images/runningLeft.png" alt="running man" height="42" width="42"><a class="activityDetails" href="activity.html">Running</a><img src="images/runningRight.png" alt="running man" height="42" width="42"></h2>
+			<div class="row mb-3">
+				<div class="col-8 totals">
+					Total Activity Time:
+				</div>
+				<div class="col-4">
+				<span id="totalRunningTime"></span>Minutes
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-8 totals">
+					Total Calories Burned:
+				</div>
+				<div class="col-4">
+				<span id="totalRunningCalories"></span>Calories
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-8 totals">
+					Total UV-Exposure:
+				</div>
+				<div class="col-4">
+				<span id="totalRunningUV"></span>UV Rating
+				</div>
+			</div>
         </div>
+		<div class="col-lg-3 mr-4 mb-3 ml-4" id="bikingSummary">
+          <h2><img src="images/bikingLeft.png" alt="biking man" height="42" width="50"><a class="activityDetails" href="activity.html">Biking</a><img src="images/bikingRight.png" alt="biking man" height="42" width="50"></h2>
+			<div class="row mb-3">
+				<div class="col-8 totals">
+					Total Activity Time:
+				</div>
+				<div class="col-4">
+				<span id="totalBikingTime"></span>Minutes
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-8 totals">
+					Total Calories Burned:
+				</div>
+				<div class="col-4">
+				<span id="totalBikingCalories"></span>Calories
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-8 totals">
+					Total UV-Exposure:
+				</div>
+				<div class="col-4">
+				<span id="totalBikingUV"></span>UV Rating
+				</div>
+			</div>
+        </div>  
       </div>
-      <!-- /.row -->
-
-      <!-- Team Members -->
-      <h2>Our Team</h2>
-
-      <div class="row">
-        <div class="col-lg-4 mb-4">
-          <div class="card h-100 text-center">
-            <img class="card-img-top" src="http://placehold.it/750x450" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Derek McMullen</h4>
-              <h6 class="card-subtitle mb-2 text-muted">Co-Founder</h6>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#">dmcmullen@email.arizona.edu</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-          <div class="card h-100 text-center">
-            <img class="card-img-top" src="http://placehold.it/750x450" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Jake Reed</h4>
-              <h6 class="card-subtitle mb-2 text-muted">Co-Founder</h6>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#">jakereed@email.arizona.edu</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-          <div class="card h-100 text-center">
-            <img class="card-img-top" src="http://placehold.it/750x450" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Max Fitzgerald</h4>
-              <h6 class="card-subtitle mb-2 text-muted">Co-Founder</h6>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#">maxfitzgerald@email.arizona.edu</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /.row -->
 
     </div>
     <!-- /.container -->
