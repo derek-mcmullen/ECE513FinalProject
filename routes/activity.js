@@ -6,7 +6,7 @@ var Activity = require("../models/activity");
 var Device = require("../models/device"); 
 
 
-// GET request return one or "all" devices registered and last time of contact.
+// GET request return one or "all" activity data summarized 
 router.get('/summary/:devid', function(req, res, next) {
     var deviceId = req.params.devid;
     var responseJson = { activity: [] };
@@ -26,15 +26,144 @@ router.get('/summary/:devid', function(req, res, next) {
         res.status(400).json(errorMsg);
       }
       else {
-         for(var doc of allActivity) {
-            responseJson.activity.push({ "deviceId": doc.deviceId,  "latitude" : doc.latitude, "longitude": doc.longitude, "uv": doc.uv, "speed": doc.speed});
+		activityNum = -1; 
+		devID = -1; 
+		activityCount = 0;  
+		avgSpeed = 0; 
+		avgUV = 0;
+		startTime = 999999999999; 
+		stopTime = -1; 
+
+        for(var doc of allActivity) {
+
+		// combine all returned data into activities
+		if (doc.activityId == activityNum) { 
+		    // accumulate data
+		    avgSpeed += doc.speed; 
+		    avgUV += doc.uv; 
+		    activityCount++; 
+			if (doc.timeStamp < startTime) { 
+				startTime = doc.timeStamp; 
+			} 
+			if (doc.timeStamp >= stopTime) { 
+				stopTime = doc.timeStamp; 
+			}
+
+		} else { 
+		    if ( devID !== -1) { 
+	     	// identify activity types, duration, average speed, calories burned, 
+		    	avgSpeed = avgSpeed / activityCount; 
+		    	avgUV = avgUV / activityCount; 
+				
+				if (avgSpeed < 2) { 
+					actType = "Walking"; 
+				} else if (avgSpeed < 6) { 
+					actType = "Running"; 
+				} else { 
+					actType = "Biking"; 
+				} 
+				
+				duration = stopTime - startTime; 
+				
+		    	// push data onto response
+				responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed});
+		    }
+		    // start a new activity
+		    activityNum = doc.activityId; 
+		    devID = doc.deviceId; 
+			
+			if (doc.timeStamp < startTime) { 
+				startTime = doc.timeStamp; 
+			} 
+			if (doc.timeStamp >= stopTime) { 
+				stopTime = doc.timeStamp; 
+			}
+
+			avgSpeed = doc.speed; 
+		    avgUV = doc.uv; 
+		    activityCount = 1; 
+		}
 	 }
+	
+		// still need to post the final activity
+		avgSpeed = avgSpeed / activityCount; 
+       	avgUV = avgUV / activityCount; 
+		duration = stopTime - startTime; 
+		
+		if (avgSpeed < 2) { 
+			actType = "Walking"; 
+		} else if (avgSpeed < 6) { 
+			actType = "Running"; 
+		} else { 
+			actType = "Biking"; 
+		} 
+
+		// push data onto response
+		responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed});
       }
       res.status(200).json(responseJson);
-    }).sort({_id:-1});
-	    
-    
+    }).sort({activityId:-1, timeStamp:1});    
+ 
 });
+
+
+// GET request return activity specific data and location parameters 
+router.get('/location/:actid', function(req, res, next) {
+    var activityId = req.params.actid;
+    var responseJson = {};
+
+    var query = {
+       "activityId" : activityId 
+    };
+
+    Activity.find(query, function(err, allActivity) {
+		if (err) {
+			var errorMsg = {"message" : err};
+				res.status(400).json(errorMsg);
+			}
+		else {
+			activityCount = 0;  
+			avgSpeed = 0; 
+			avgUV = 0;
+			startTime = 9999999999; 
+			stopTime = -1; 
+
+			for(var doc of allActivity) {
+				activityNum = doc.activityId; 
+			
+				// accumulate data
+				avgSpeed += doc.speed; 
+				avgUV += doc.uv; 
+				activityCount++; 
+				
+				if (doc.timeStamp < startTime) { 
+					startTime = doc.timeStamp; 
+				} 
+				if (doc.timeStamp >= stopTime) { 
+					stopTime = doc.timeStamp; 
+				}
+			}
+
+			avgSpeed = avgSpeed / activityCount; 
+			avgUV = avgUV / activityCount; 
+			duration = stopTime - startTime; 
+			
+			responseJson["activityId"] = activityNum; 
+			responseJson["duration"] = duration; 
+			responseJson["avgUV"] = avgUV; 
+			responseJson["avgSpeed"] = avgSpeed; 
+			responseJson["location"] = [];  
+
+			// push location data onto response
+			for (var doc of allActivity) {
+				responseJson.location.push({ "latitude" : doc.latitude, "longitude": doc.longitude });
+			}
+		}
+	res.status(200).json(responseJson);
+    }).sort({timeStamp:1});    
+ 
+});
+
 
 // Deletion endpoint for clearing out bad database data
 router.post('/delete', function(req, res, next) {  
@@ -78,6 +207,18 @@ router.post('/update', function(req, res, next) {
         res.status(400).json(responseJson);
         return;
     }
+    // Ensure the request includes the activityId parameter
+    if( !req.body.hasOwnProperty("activityId")) {
+        responseJson.message = "Missing activity ID information.";
+        res.status(400).json(responseJson);
+        return;
+    }
+	// Ensure the request includes the timeStamp parameter
+    if( !req.body.hasOwnProperty("timeStamp")) {
+        responseJson.message = "Missing timeStamp information.";
+        res.status(400).json(responseJson);
+        return;
+    }
    
     // See if device is registered
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
@@ -88,10 +229,12 @@ router.post('/update', function(req, res, next) {
 	    // Create a new activity with specified id, times, and sensor info values.
             var newActivity = new Activity({
                 deviceId: req.body.deviceId,
+				activityId: req.body.activityId,
+				timeStamp: req.body.timeStamp,
                 latitude: req.body.latitude,
                 longitude: req.body.longitude, 
-		speed: req.body.speed, 
-		uv: req.body.uv
+				speed: req.body.speed, 
+				uv: req.body.uv
             });
 
  	    // Save activity. If successful, return success. If not, return error message.
