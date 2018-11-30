@@ -9,24 +9,56 @@ function sendReqForActivityInfo(deviceId) {
    });
 }
 
-function activityInfoSuccess(data, textSatus, jqXHR) {
-   var prepString = ""; 
-
-   if( !data.activity.length) { 
-	prepString = "<li class='list-group-item'>No activity data for this device!"; 
-   } else {  
-   	var prepString = ""; 
-    	for (var activity of data.activity) {
-      		prepString += "<li class='list-group-item'>Speed: " + activity.speed + ", UV: " + activity.uv + ", Lat:  " + activity.latitude + ", Long: " + activity.longitude + "</li>"; 
-    		
+function activityInfoSuccess(data, textStatus, jqXHR) {
+   	var prepAllString = "";
+	var prepWalkingString = "";
+	var prepRunningString = "";
+	var prepBikingString = "";
+	var walkHasData = "";
+	var runHasData = "";
+	var bikeHasData = "";
+	for (var activity of data.activity) {
+   		if(activity.activityId === -1) { 
+			prepAllString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepWalkingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepRunningString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepBikingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+   		} 
+		else {  
+			prepAllString += "<tr><td>" + activity.activityType + "</td><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+			if(activity.activityType === "Walking"){
+				prepWalkingString += "<tr><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+				walkHasData = "data";
+			}
+			if(activity.activityType === "Running"){
+				prepRunningString += "<tr><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+				runHasData = "data";
+			}
+			if(activity.activityType === "Biking"){
+				prepBikingString += "<tr><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+				bikeHasData = "data";
+			}
+		}
+		}
+	if (walkHasData !== "data"){
+				prepWalkingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			}
+	if(runHasData !== "data"){
+				prepRunningString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			}			
+	if(bikeHasData !== "data"){
+				prepBikingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
 	}
-   }
-
-   $("#listItems").html(prepString); 
-   $("#error").hide();
-   $("#main").show();
-
+	
+   	$("#activityAllTableData").html(prepAllString);
+	$("#activityWalkingTableData").html(prepWalkingString);
+	$("#activityRunningTableData").html(prepRunningString);
+	$("#activityBikingTableData").html(prepBikingString);
+   	$("#error").hide();
+	$("#main").show();
 }
+
+
 
 function activityInfoError(jqXHR, textStatus, errorThrown) {
    // If authentication error, delete the authToken 
@@ -41,7 +73,10 @@ function activityInfoError(jqXHR, textStatus, errorThrown) {
      $("#error").show();
    } 
 }
-
+function updateRadio(){
+	var deviceNum = $("input[name='device']:checked").val();
+	sendReqForActivityInfo(deviceNum);
+}
 // Handle authentication on page load
 $(function() {
    // If there's no authToekn stored, redirect user to 
@@ -49,22 +84,16 @@ $(function() {
    if (!window.localStorage.getItem("authToken")) {
       window.location.replace("signin.html");
    }
-   else {
-      sendReqForActivityInfo();
-   }
-   
+	else{
+	var deviceNum = $("input[name='device']:checked").val();
+	sendReqForActivityInfo(deviceNum);
+	}
+
    // Register event listeners
-   $("#desiredDevice").change(function() { 
-	deviceNum = $("#desiredDevice").val(); 
-	sendReqForActivityInfo(deviceNum); 
-   
-   	// Update page periodically
-   	setInterval(function() { 
-	    deviceNum = $("#desiredDevice").val(); 
-	    sendReqForActivityInfo(deviceNum); 
-   	}, 1000); 
+$("input[type='radio']").change(updateRadio);
 
-   }); 
-
-
+$("#desiredDevice").change(function() { 
+	var deviceNum = $("#desiredDevice").val(); 
+	sendReqForActivityInfo(deviceNum);
 });
+	});
