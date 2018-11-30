@@ -14,16 +14,47 @@ function activityInfoSuccess(data, textStatus, jqXHR) {
 	var prepWalkingString = "";
 	var prepRunningString = "";
 	var prepBikingString = "";
+	var walkHasData = "";
+	var runHasData = "";
+	var bikeHasData = "";
 	for (var activity of data.activity) {
    		if(activity.activityId === -1) { 
-			prepAllString += "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepAllString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepWalkingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepRunningString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			prepBikingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
    		} 
 		else {  
 			prepAllString += "<tr><td>" + activity.activityType + "</td><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+			if(activity.activityType === "Walking"){
+				prepWalkingString += "<tr><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+				walkHasData = "data";
+			}
+			if(activity.activityType === "Running"){
+				prepRunningString += "<tr><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+				runHasData = "data";
+			}
+			if(activity.activityType === "Biking"){
+				prepBikingString += "<tr><td>" + "Date Needed" + "</td><td>" + activity.duration + "</td><td>" + "Calories Needed" + "</td><td>" + activity.uv + "</td><td>" + activity.speed + "</td></tr>";
+				bikeHasData = "data";
+			}
 		}
+		}
+	if (walkHasData !== "data"){
+				prepWalkingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			}
+	if(runHasData !== "data"){
+				prepRunningString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
+			}			
+	if(bikeHasData !== "data"){
+				prepBikingString = "<tr><td valign='top' colspan='6' class='dataTables_empty'>This device currently has no data to show</td></tr>";
 	}
-   $("#activityAllTableData").html(prepAllString); 
-   $("#error").hide();
+	
+   	$("#activityAllTableData").html(prepAllString);
+	$("#activityWalkingTableData").html(prepWalkingString);
+	$("#activityRunningTableData").html(prepRunningString);
+	$("#activityBikingTableData").html(prepBikingString);
+   	$("#error").hide();
 	$("#main").show();
 }
 

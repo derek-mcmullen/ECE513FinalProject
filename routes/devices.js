@@ -1,17 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var request = require("request");
-var jwt = require("jwt-simple"); 
-var fs = require('fs');
 
 // Import the model for Device documents
 var Device = require("../models/device");
 var Activity = require("../models/activity"); 
-
-/* Authenticate user */
-var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
-var particleAccessToken = fs.readFileSync(__dirname + '/../../particle_access_token').toString();
-
 
 // Function to generate a random apikey consisting of 32 characters
 function getNewApikey() {
@@ -82,14 +74,6 @@ router.get('/status/:devid', function(req, res, next) {
     });
 });
 
-// Deletion endpoint for clearing out bad database data (will remove all corresponding activity data too)
-router.post('/delete', function(req, res, next) {  
-    Device.find({ deviceId: req.body.deviceId }).remove().exec(); 
-	Activity.find({ deviceId: req.body.deviceId }).remove().exec(); 
-    res.status(200).json({deleted:"yes"}); 
-}); 
-
-
 router.post('/register', function(req, res, next) {
     var responseJson = {
         registered: false,
@@ -105,26 +89,11 @@ router.post('/register', function(req, res, next) {
         return;
     }
    
-	var email = "";
-    
-    // If authToken provided, use email in authToken 
-    if (req.headers["x-auth"]) {
-        try {
-            var decodedToken = jwt.decode(req.headers["x-auth"], secret);
-            email = decodedToken.email;
-        }
-        catch (ex) {
-            responseJson.message = "Invalid authorization token.";
-            return res.status(400).json(responseJson);
-        }
-    }
-    else {
-        // Ensure the request includes the email parameter
-        if( !req.body.hasOwnProperty("email")) {
-            responseJson.message = "Invalid authorization token or missing email address.";
-            return res.status(400).json(responseJson);
-        }
-        email = req.body.email;
+    // Ensure the request includes the email parameter
+    if( !req.body.hasOwnProperty("email")) {
+        responseJson.message = "Missing email address.";
+        res.status(400).json(responseJson);
+        return;
     }
 
     // See if device is already registered
@@ -140,7 +109,7 @@ router.post('/register', function(req, res, next) {
 	         // Create a new device with specified id, user email, and randomly generated apikey.
             var newDevice = new Device({
                 deviceId: req.body.deviceId,
-                userEmail: email,
+                userEmail: req.body.email,
                 apikey: deviceApikey
             });
 
@@ -154,15 +123,6 @@ router.post('/register', function(req, res, next) {
                     res.status(400).json(responseJson);
                 }
                 else {
-					request({
-					    method: "POST",
-					    uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/apiUpdate",
-					    form: {
-						   access_token : particleAccessToken,
-						   apikey: deviceApikey
-					    }
-					});
-					
                     responseJson.registered = true;
                     responseJson.apikey = deviceApikey;
                     responseJson.message = "Device ID " + req.body.deviceId + " was registered.";
@@ -171,92 +131,6 @@ router.post('/register', function(req, res, next) {
             });
         }
     });
-});
-
-// update UV Threshold on device
-router.post('/uvedit', function(req, res, next) {
-    var responseJson = {
-        success: false,
-        message : "",
-    };
-    var deviceExists = false;
-    
-    // Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("deviceId")) {
-        responseJson.message = "Missing deviceId.";
-        return res.status(400).json(responseJson);
-    }
-	// Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("newUV")) {
-        responseJson.message = "Missing UV Setting.";
-        return res.status(400).json(responseJson);
-    }
-	
-    
-    // If authToken provided, use email in authToken 
-/*     try {
-        var decodedToken = jwt.decode(req.headers["x-auth"], secret);
-    }
-    catch (ex) {
-        responseJson.message = "Invalid authorization token.";
-        return res.status(400).json(responseJson);
-    } */
-    
-    request({
-       method: "POST",
-       uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/uvUpdate",
-       form: {
-	       access_token : particleAccessToken,
-	       uvSetting: req.body.newUV
-        }
-    });
-            
-    responseJson.success = true;
-    responseJson.message = "Device ID " + req.body.deviceId + " has updated its UV threshold.";
-    return res.status(200).json(responseJson);
-});
-
-// update UV Threshold on device
-router.post('/apiedit', function(req, res, next) {
-    var responseJson = {
-        success: false,
-        message : "",
-    };
-    var deviceExists = false;
-    
-    // Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("deviceId")) {
-        responseJson.message = "Missing deviceId.";
-        return res.status(400).json(responseJson);
-    }
-	// Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("apikey")) {
-        responseJson.message = "Missing API Key.";
-        return res.status(400).json(responseJson);
-    }
-	
-    
-    // If authToken provided, use email in authToken 
-/*     try {
-        var decodedToken = jwt.decode(req.headers["x-auth"], secret);
-    }
-    catch (ex) {
-        responseJson.message = "Invalid authorization token.";
-        return res.status(400).json(responseJson);
-    } */
-    
-    request({
-       method: "POST",
-       uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/apiUpdate",
-       form: {
-	       access_token : particleAccessToken,
-	       apikey: req.body.apikey
-        }
-    });
-            
-    responseJson.success = true;
-    responseJson.message = "Device ID " + req.body.deviceId + " has updated its API key.";
-    return res.status(200).json(responseJson);
 });
 
 module.exports = router;

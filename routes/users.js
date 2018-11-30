@@ -23,7 +23,7 @@ router.post('/signin', function(req, res, next) {
                res.status(401).json({success : false, error : "Error authenticating. Please contact support."});
             }
             else if(valid) {
-			   var token = jwt.encode({email: req.body.email}, secret);
+               var token = jwt.encode({email: req.body.email}, secret);
                res.status(201).json({success : true, token : token});         
             }
             else {
@@ -75,14 +75,6 @@ router.get("/account" , function(req, res) {
             return res.status(200).json({success: false, message: "User does not exist."});
          }
          else {
-			 
-			// update last accessed 
-			var time = (new Date()).getTime(); 
-			User.updateOne({ email: decodedToken.email }, { lastAccess: time }, function(err, res) {
-				// Updated at most one doc, `res.modifiedCount` contains the number
-				// of docs that MongoDB updated
-			}); 
-			 
             userStatus['success'] = true;
             userStatus['email'] = user.email;
             userStatus['fullName'] = user.fullName;
@@ -94,7 +86,7 @@ router.get("/account" , function(req, res) {
 			         // Construct device list
 			         var deviceList = []; 
 			         for (device of devices) {
-				         deviceList.push({  
+				         deviceList.push({ 
 				               deviceId: device.deviceId,
 				               apikey: device.apikey,
 				         });
