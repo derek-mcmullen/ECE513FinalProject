@@ -154,6 +154,15 @@ router.post('/register', function(req, res, next) {
                     res.status(400).json(responseJson);
                 }
                 else {
+					request({
+					    method: "POST",
+					    uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/apiUpdate",
+					    form: {
+						   access_token : particleAccessToken,
+						   apikey: deviceApikey
+					    }
+					});
+					
                     responseJson.registered = true;
                     responseJson.apikey = deviceApikey;
                     responseJson.message = "Device ID " + req.body.deviceId + " was registered.";
@@ -195,7 +204,7 @@ router.post('/uvedit', function(req, res, next) {
     
     request({
        method: "POST",
-       uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/uvThreshold",
+       uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/uvUpdate",
        form: {
 	       access_token : particleAccessToken,
 	       uvSetting: req.body.newUV
