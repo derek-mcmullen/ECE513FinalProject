@@ -106,6 +106,28 @@ router.get('/summary/:devid', function(req, res, next) {
  
 });
 
+// raw activity data
+router.get('/raw', function(req, res, next) { 
+
+    var responseJson = { activity: [] };
+	var query = {};
+	
+	Activity.find(query, function(err, allActivity) {
+      if (err) {
+        var errorMsg = {"message" : err};
+        res.status(400).json(errorMsg);
+      }
+      else {
+		for(var doc of allActivity) {
+			responseJson.activity.push({ doc });
+		}
+		res.status(200).json(responseJson);
+	  }
+	  
+	}); 
+}); 
+
+
 
 // GET request return activity specific data and location parameters 
 router.get('/location/:actid', function(req, res, next) {
@@ -183,58 +205,36 @@ router.post('/update', function(req, res, next) {
         res.status(400).json(responseJson);
         return;
     }
-    // Ensure the request includes the latitude parameter
-    if( !req.body.hasOwnProperty("latitude")) {
-        responseJson.message = "Missing activity latitude information.";
-        res.status(400).json(responseJson);
-        return;
-    }
-    // Ensure the request includes the longitude parameter
-    if( !req.body.hasOwnProperty("longitude")) {
-        responseJson.message = "Missing activity longitude information.";
-        res.status(400).json(responseJson);
-        return;
-    }
-    // Ensure the request includes the speed parameter
-    if( !req.body.hasOwnProperty("uv")) {
-        responseJson.message = "Missing sensor UV information.";
-        res.status(400).json(responseJson);
-        return;
-    }
-    // Ensure the request includes the speed parameter
-    if( !req.body.hasOwnProperty("speed")) {
-        responseJson.message = "Missing sensor speed information.";
-        res.status(400).json(responseJson);
-        return;
-    }
-    // Ensure the request includes the activityId parameter
-    if( !req.body.hasOwnProperty("activityId")) {
-        responseJson.message = "Missing activity ID information.";
-        res.status(400).json(responseJson);
-        return;
-    }
-	// Ensure the request includes the timeStamp parameter
-    if( !req.body.hasOwnProperty("timeStamp")) {
-        responseJson.message = "Missing timeStamp information.";
-        res.status(400).json(responseJson);
-        return;
-    }
    
     // See if device is registered
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device !== null) {
-	    // log this activity
-
+	    
+		// log this activity if API key matches
+		var js = req.body.data;
+		var obj = JSON.parse(js);
+	
+		// TODO: check the API key
+	
+		 /* To help save space in the string we use the following encoding:
+             a) longitude
+             b) latitude
+             c) speed
+             d) UV reading
+             i) Activity ID
+             t) Unix timestamp
+             k) API key
+          */
 
 	    // Create a new activity with specified id, times, and sensor info values.
             var newActivity = new Activity({
                 deviceId: req.body.deviceId,
-				activityId: req.body.activityId,
-				timeStamp: req.body.timeStamp,
-                latitude: req.body.latitude,
-                longitude: req.body.longitude, 
-				speed: req.body.speed, 
-				uv: req.body.uv
+				activityId: obj.i, 					//req.body.activityId,
+				timeStamp: obj.t, 					//req.body.timeStamp,
+                latitude: obj.b,					//req.body.latitude,
+                longitude: obj.a, 					//req.body.longitude, 
+				speed: obj.c, 						//req.body.speed, 
+				uv: obj.data						//req.body.uv
             });
 
  	    // Save activity. If successful, return success. If not, return error message.
