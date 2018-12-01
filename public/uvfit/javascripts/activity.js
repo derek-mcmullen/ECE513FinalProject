@@ -55,8 +55,9 @@ function allTablePopulate(data, textStatus, jqXHR){
 	$("#main").show();
 	}
 	else{
+		$("#all-table-here").empty();
 		var prepString = "<h3>There is currently no data for this device to display</h3>";
-		$("#table-here").html(prepString);
+		$("#all-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
 	}
@@ -102,8 +103,9 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 	$("#main").show();
 	}
 	else{
+		$("#walking-table-here").empty();
 		var prepString = "<h3>There is currently no data for this device to display</h3>";
-		$("#table-here").html(prepString);
+		$("#walking-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
 	}
@@ -149,8 +151,9 @@ function runningTablePopulate(data, textStatus, jqXHR){
 	$("#main").show();
 	}
 	else{
+		$("#running-table-here").empty();
 		var prepString = "<h3>There is currently no data for this device to display</h3>";
-		$("#table-here").html(prepString);
+		$("#running-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
 	}
@@ -181,6 +184,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 			data:data1,
 			responsiveLayout:"hide",
 			layout:"fitColumns",
+			autoResize: true,
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
@@ -196,8 +200,9 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 	$("#main").show();
 	}
 	else{
+		$("#biking-table-here").empty();
 		var prepString = "<h3>There is currently no data for this device to display</h3>";
-		$("#table-here").html(prepString);
+		$("#biking-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
 	}
