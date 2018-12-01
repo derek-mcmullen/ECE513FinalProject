@@ -207,6 +207,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 		$("#main").show();
 	}
 }
+
 function activityInfoError(jqXHR, textStatus, errorThrown) {
    // If authentication error, delete the authToken 
    // redirect user to sign-in page (which is index.html)
@@ -220,12 +221,14 @@ function activityInfoError(jqXHR, textStatus, errorThrown) {
      $("#error").show();
    } 
 }
+
 function activityDuration(length){
 	var duration = (length/60).toFixed(1);
 	return(duration);
 }
 function updateRadio(){
 	var deviceNum = $("input[name='device']:checked").val();
+	console.log(deviceNum);
 	sendReqForActivityInfo(deviceNum);
 }
 // Handle authentication on page load
@@ -236,14 +239,17 @@ $(function() {
       window.location.replace("signin.html");
    }
 	else{
-	var deviceNum = $("input[name='device']:checked").val();
+	var deviceNum = $("#firstDevice").val();
+	//var deviceNum = $('input[type=radio]:checked').val();
+	console.log(deviceNum);
 	sendReqForActivityInfo(deviceNum);
 	}
 
    // Register event listeners
-$("input[type='radio']").change(updateRadio);
+//$("input[type='radio']").change(updateRadio);
+	$("#populateMyDevices").change(updateRadio);
 
-$("#desiredDevice").change(function() { 
+	$("#desiredDevice").change(function() { 
 	var deviceNum = $("#desiredDevice").val(); 
 	sendReqForActivityInfo(deviceNum);
 });
