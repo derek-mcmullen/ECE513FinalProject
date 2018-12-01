@@ -4,7 +4,7 @@ function sendReqForActivityInfo(deviceId) {
       type: 'GET',
       headers: { 'x-auth': window.localStorage.getItem("authToken") },
       responseType: 'json',
-      success: activityInfoSuccess,
+      success: activityInfoSuccess1,
       error: activityInfoError
    });
 }
@@ -58,7 +58,49 @@ function activityInfoSuccess(data, textStatus, jqXHR) {
 	$("#main").show();
 }
 
-
+function activityInfoSuccess1(data, textStatus, jqXHR){
+	var data1 = [];
+	var i = 0;
+	var emptyTable = false;
+	for (var activity of data.activity) {
+		if(activity.activityId === -1){
+			emptyTable = true;
+		}
+		else{
+		var tabledata = 
+		{actType: activity.activityType, date: "date", duration: activity.duration, calories: "calories", uv: activity.uv, speed: activity.speed};
+		}
+		data1[i] = tabledata;
+		i += 1;
+	}	
+	if(!emptyTable){
+		var table = new Tabulator("#table-here", {
+			height:"45vh",
+			data:data1,
+			responsiveLayout:"hide",
+			layout:"fitColumns",
+			columns:[
+					{title:"Activity Type",field:"actType",align:"center"},
+					{title:"Date of Activity",field:"date",align:"center"},
+					{title:"Duration of Activity",field:"duration",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"UV Index",field:"uv",align:"center"},
+					{title:"Speed",field:"speed",align:"center"},
+			],
+			rowClick:function(e, row){ //trigger an alert message when the row is clicked
+ 				alert("Row " + row.getData().id + " Clicked!!!!");
+ 			},
+		});
+	$("#error").hide();
+	$("#main").show();
+	}
+	else{
+		var prepString = "<h3>There is currently no data for this device to display</h3>";
+		$("#table-here").html(prepString);
+		$("#error").hide();
+		$("#main").show();
+	}
+}
 
 function activityInfoError(jqXHR, textStatus, errorThrown) {
    // If authentication error, delete the authToken 
