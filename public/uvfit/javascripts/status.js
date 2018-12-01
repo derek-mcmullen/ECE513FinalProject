@@ -17,7 +17,6 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 	var prepString = ""
    for (var device of data.devices) {
 	   prepString += "<li class='list-group-item' id='" + device.deviceId + "'>ID: " + device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + "</li>";
-      $("#removeDeviceControl").html(prepString);
    }
 	$("#insert").html(prepString);
 }
@@ -47,9 +46,9 @@ function registerDevice() {
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {
            // Add new device to the device list
-           $("#removeDeviceControl").before("<li class='list-group-item'>ID: " + $("#deviceId").val() + ", APIKEY: " + data["apikey"] + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + "</li>");
            $("#deviceId").val("");
 		   $("#error").hide();
+			location.reload(true);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             var response = JSON.parse(jqXHR.responseText);

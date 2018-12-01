@@ -9,3 +9,11 @@
 	opacity: 0.8;
 	font: 70 30px 'Bitter';
 }
+#openingDiv {
+  padding-top: 200px;
+}
+@media (max-width: 979px) {
+  #openingDiv {
+    padding-top: 0px;
+  }
+}
