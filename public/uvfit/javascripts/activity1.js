@@ -13,11 +13,11 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 	var i = 0;
    	for (var device of data.devices) {
 		if(i===0){
-	   		prepString +=  "<input type='radio' id='" + device.deviceId + "' name='device' value='" + device.deviceId + "'>" + "<h4 id='firstDevice'>" + device.deviceId + "</h4>";  
+	   		prepString +=  "<input type='radio' class='mx-2' id='" + device.deviceId + "' name='device' value='" + device.deviceId + "'>" + "<h4>" + device.deviceId + "</h4>";  
 			i = 1;
 		}
 		else{
-			prepString +=  "<input type='radio' id='" + device.deviceId + "' name='device' value='" + device.deviceId + "'>" + "<h4 id='firstDevice'>" + device.deviceId + "</h4>" ;
+			prepString +=  "<input type='radio' class='mx-3' id='" + device.deviceId + "' name='device' value='" + device.deviceId + "'>" + "<h4>" + device.deviceId + "</h4>" ;
 		}
 	}	
 	$("#populateMyDevices").html(prepString);
