@@ -25,8 +25,9 @@ function allTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{actType: activity.activityType, date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{actType: activity.activityType, date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		data1[i] = tabledata;
 		i += 1;
@@ -43,7 +44,7 @@ function allTablePopulate(data, textStatus, jqXHR){
 					{title:"Activity Type",field:"actType",align:"center"},
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -72,8 +73,9 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		if(activity.activityType === "Walking"){
 		data1[i] = tabledata;
@@ -91,7 +93,7 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -120,8 +122,9 @@ function runningTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		if(activity.activityType === "Running"){
 		data1[i] = tabledata;
@@ -139,7 +142,7 @@ function runningTablePopulate(data, textStatus, jqXHR){
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -168,8 +171,9 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		if(activity.activityType === "Biking"){
 		data1[i] = tabledata;
@@ -188,7 +192,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -228,7 +232,7 @@ function activityDuration(length){
 }
 function updateRadio(){
 	var deviceNum = $("input[name='device']:checked").val();
-	console.log(deviceNum);
+	
 	sendReqForActivityInfo(deviceNum);
 }
 // Handle authentication on page load
