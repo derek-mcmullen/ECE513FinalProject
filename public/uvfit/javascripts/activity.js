@@ -8,6 +8,22 @@ function sendReqForActivityInfo(deviceId) {
       error: activityInfoError
    });
 }
+function sendReqForActivityLocation(actId) {
+   $.ajax({
+      url: '/activity/location/' + actId,
+      type: 'GET',
+      headers: { 'x-auth': window.localStorage.getItem("authToken") },
+      responseType: 'json',
+      success: activityLocationSuccess,
+      error: activityInfoError
+   });
+}
+function activityLocationSuccess(data, textStatus, jqXHR){
+	for(var location of data.location){
+		console.log(location.latitude);
+		console.log(location.longitude);
+	}
+}
 
 function activityInfoSuccess(data, textStatus, jqXHR){
 	allTablePopulate(data, textStatus, jqXHR);
@@ -25,8 +41,9 @@ function allTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{actType: activity.activityType, date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{actType: activity.activityType, date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)), activityid: activity.activityId };
 		}
 		data1[i] = tabledata;
 		i += 1;
@@ -43,12 +60,15 @@ function allTablePopulate(data, textStatus, jqXHR){
 					{title:"Activity Type",field:"actType",align:"center"},
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
+					{title:"Activity ID",field:"activityid",width:1},
 			],
 			rowClick:function(e, row){ //trigger an alert message when the row is clicked
- 				alert("Row " + row.getData().id + " Clicked!!!!");
+				var cells = row.getCells();
+ 				alert("Activity ID " + cells[6].getValue() + " Clicked");
+				sendReqForActivityLocation((cells[6].getValue()));
  			},
 		});
 	$("#error").hide();
@@ -56,7 +76,7 @@ function allTablePopulate(data, textStatus, jqXHR){
 	}
 	else{
 		$("#all-table-here").empty();
-		var prepString = "<h3>There is currently no data for this device to display</h3>";
+		var prepString = "<h3 class='text-center'>There is currently no data for this device to display</h3>";
 		$("#all-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
@@ -72,8 +92,9 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		if(activity.activityType === "Walking"){
 		data1[i] = tabledata;
@@ -91,7 +112,7 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -104,7 +125,7 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 	}
 	else{
 		$("#walking-table-here").empty();
-		var prepString = "<h3>There is currently no data for this device to display</h3>";
+		var prepString = "<h3 class='text-center'>There is currently no data for this device to display</h3>";
 		$("#walking-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
@@ -120,8 +141,9 @@ function runningTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		if(activity.activityType === "Running"){
 		data1[i] = tabledata;
@@ -139,7 +161,7 @@ function runningTablePopulate(data, textStatus, jqXHR){
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -152,7 +174,7 @@ function runningTablePopulate(data, textStatus, jqXHR){
 	}
 	else{
 		$("#running-table-here").empty();
-		var prepString = "<h3>There is currently no data for this device to display</h3>";
+		var prepString = "<h3 class='text-center'>There is currently no data for this device to display</h3>";
 		$("#running-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
@@ -168,8 +190,9 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 		}
 		else{
 		var durationString = parseFloat(activityDuration(activity.duration));
+		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: "calories", uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
 		}
 		if(activity.activityType === "Biking"){
 		data1[i] = tabledata;
@@ -188,7 +211,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 			columns:[
 					{title:"Date of Activity",field:"date",align:"center"},
 					{title:"Duration of Activity",field:"duration",align:"center",bottomCalc:"avg"},
-					{title:"Calories Burned",field:"calories",align:"center"},
+					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
 			],
@@ -201,7 +224,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 	}
 	else{
 		$("#biking-table-here").empty();
-		var prepString = "<h3>There is currently no data for this device to display</h3>";
+		var prepString = "<h3 class='text-center'>There is currently no data for this device to display</h3>";
 		$("#biking-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();
@@ -222,13 +245,14 @@ function activityInfoError(jqXHR, textStatus, errorThrown) {
    } 
 }
 
+
 function activityDuration(length){
 	var duration = (length/60).toFixed(1);
 	return(duration);
 }
 function updateRadio(){
 	var deviceNum = $("input[name='device']:checked").val();
-	console.log(deviceNum);
+	
 	sendReqForActivityInfo(deviceNum);
 }
 // Handle authentication on page load

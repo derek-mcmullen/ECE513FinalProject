@@ -19,10 +19,11 @@
     <link href="stylesheets/modern-business.css" rel="stylesheet">
 	<link href="stylesheets/activitysummary.css" rel="stylesheet">  
 	<link href="stylesheets/navbar.css" rel="stylesheet">
-	<script src="/uvfit/javascripts/status.js"></script>
+	<script src="javascripts/jquery/jquery.min.js"></script>
+	<script src="/uvfit/javascripts/activity1.js"></script>
+	<script src="/uvfit/javascripts/activitysummary.js"></script>
 	<script src="/uvfit/javascripts/navbar.js" defer></script>
 	<script src="/uvfit/javascripts/signout.js" defer></script>
-	<script src="javascripts/jquery/jquery.min.js"></script>
     <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
   </head>
 
@@ -79,6 +80,8 @@
       <h1 class="mt-4 mb-3 pt-2">Recent Activity 
         <small>| Past 7 Days</small>
       </h1>
+		<h3> Select device to view activity: </h3>
+		<div class="form-inline" id="populateMyDevices"></div>
 		<p>Activity data is from: to </p>
       <!-- Intro Content -->
       <div class="row justify-content-md-center mt-4 pt-4">
@@ -89,7 +92,7 @@
 					Total Activity Time:
 				</div>
 				<div class="col-4">
-				<span id="totalWalkingTime"></span>Minutes
+				<span id="totalWalkingTime"></span> Minutes
 				</div>
 			</div>
 			<div class="row mb-3">
@@ -97,15 +100,15 @@
 					Total Calories Burned:
 				</div>
 				<div class="col-4">
-				<span id="totalWalkingCalories"></span>Calories
+				<span id="totalWalkingCalories"></span> Calories
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-8 totals">
-					Total UV-Exposure:
+					Average UV-Exposure:
 				</div>
 				<div class="col-4">
-				<span id="totalWalkingUV"></span>UV Rating
+				<span id="totalWalkingUV"></span> UV Rating
 				</div>
 			</div>
         </div>
@@ -116,7 +119,7 @@
 					Total Activity Time:
 				</div>
 				<div class="col-4">
-				<span id="totalRunningTime"></span>Minutes
+				<span id="totalRunningTime"></span> Minutes
 				</div>
 			</div>
 			<div class="row mb-3">
@@ -124,15 +127,15 @@
 					Total Calories Burned:
 				</div>
 				<div class="col-4">
-				<span id="totalRunningCalories"></span>Calories
+				<span id="totalRunningCalories"></span> Calories
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-8 totals">
-					Total UV-Exposure:
+					Average UV-Exposure:
 				</div>
 				<div class="col-4">
-				<span id="totalRunningUV"></span>UV Rating
+				<span id="totalRunningUV"></span> UV Rating
 				</div>
 			</div>
         </div>
@@ -143,7 +146,7 @@
 					Total Activity Time:
 				</div>
 				<div class="col-4">
-				<span id="totalBikingTime"></span>Minutes
+				<span id="totalBikingTime"></span> Minutes
 				</div>
 			</div>
 			<div class="row mb-3">
@@ -151,17 +154,18 @@
 					Total Calories Burned:
 				</div>
 				<div class="col-4">
-				<span id="totalBikingCalories"></span>Calories
+				<span id="totalBikingCalories"></span> Calories
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-8 totals">
-					Total UV-Exposure:
+					Average UV-Exposure:
 				</div>
 				<div class="col-4">
-				<span id="totalBikingUV"></span>UV Rating
+				<span id="totalBikingUV"></span> UV Rating
 				</div>
 			</div>
+			<div id="error"></div>
         </div>  
       </div>
 
