@@ -33,6 +33,7 @@ router.get('/summary/:devid', function(req, res, next) {
 		avgUV = 0;
 		startTime = 999999999999; 
 		stopTime = -1; 
+		cals = 0; 
 
         for(var doc of allActivity) {
 
@@ -54,19 +55,21 @@ router.get('/summary/:devid', function(req, res, next) {
 	     	// identify activity types, duration, average speed, calories burned, 
 		    	avgSpeed = avgSpeed / activityCount; 
 		    	avgUV = avgUV / activityCount; 
+				duration = stopTime - startTime; 
 				
 				if (avgSpeed < 2) { 
 					actType = "Walking"; 
+					cals = duration * (5/60);
 				} else if (avgSpeed < 6) { 
 					actType = "Running"; 
+					cals = duration * (20/60);
 				} else { 
 					actType = "Biking"; 
+					cals = duration * (10/60);
 				} 
-				
-				duration = stopTime - startTime; 
-				
+			
 		    	// push data onto response
-				responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed});
+				responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
 		    }
 		    // start a new activity
 		    activityNum = doc.activityId; 
@@ -90,16 +93,20 @@ router.get('/summary/:devid', function(req, res, next) {
        	avgUV = avgUV / activityCount; 
 		duration = stopTime - startTime; 
 		
+		
 		if (avgSpeed < 2) { 
 			actType = "Walking"; 
+			cals = duration * (5/60); 
 		} else if (avgSpeed < 6) { 
 			actType = "Running"; 
+			cals = duration * (20/60); 
 		} else { 
 			actType = "Biking"; 
+			cals = duration * (10/60); 
 		} 
 
 		// push data onto response
-		responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed});
+		responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
       }
       res.status(200).json(responseJson);
     }).sort({activityId:-1, timeStamp:1});    
@@ -176,6 +183,7 @@ router.get('/location/:actid', function(req, res, next) {
 			responseJson["avgSpeed"] = avgSpeed; 
 			responseJson["location"] = [];  
 
+
 			// push location data onto response
 			for (var doc of allActivity) {
 				responseJson.location.push({ "latitude" : doc.latitude, "longitude": doc.longitude });
@@ -234,7 +242,7 @@ router.post('/update', function(req, res, next) {
                 latitude: obj.b,					//req.body.latitude,
                 longitude: obj.a, 					//req.body.longitude, 
 				speed: obj.c, 						//req.body.speed, 
-				uv: obj.data						//req.body.uv
+				uv: obj.d							//req.body.uv
             });
 
  	    // Save activity. If successful, return success. If not, return error message.

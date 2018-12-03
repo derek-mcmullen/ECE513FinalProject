@@ -10,14 +10,14 @@ function sendReqForAccountInfo() {
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
-   $("#email").html(data.email);
-   $("#fullName").html(data.fullName);
-   $("#lastAccess").html(data.lastAccess);
-   // Add the devices to the list before the list item for the add device button (link)
+	$("#email").html(data.email);
+	$("#fullName").html(data.fullName);
+	$("#lastAccess").html(data.lastAccess);
+	// Add the devices to the list before the list item for the add device button (link)
 	var prepString = ""
-   for (var device of data.devices) {
-	   prepString += "<li class='list-group-item' id='" + device.deviceId + "'>ID: " + device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId'>Remove Device</a>" + "</li>";
-   }
+	for (var device of data.devices) {
+	   prepString += "<li class='list-group-item' id='" + device.deviceId + "'>ID: " + device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId' onclick='dropDevice(\""+device.deviceId+"\")'>Remove Device</a>" + "</li>";
+	}
 	$("#insert").html(prepString);
 }
 
@@ -33,6 +33,27 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
      $("#error").html("Error: " + status.message);
      $("#error").show();
    } 
+}
+
+function dropDevice(devID) { 
+	console.log(devID + " removed"); 
+	$.ajax({
+        url: '/devices/delete',
+        type: 'POST',
+        headers: { 'x-auth': window.localStorage.getItem("authToken") },   
+        data: { deviceId: devID, 
+		email: $("#email").val() }, 
+        responseType: 'json',
+        success: function (data, textStatus, jqXHR) {
+           // Add new device to the device list
+			location.reload(true);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var response = JSON.parse(jqXHR.responseText);
+            $("#error").html("Error: " + response.message);
+            $("#error").show();
+        }
+    }); 
 }
 
 // Registers the specified device with the server.
