@@ -19,6 +19,7 @@ function sendReqForActivityLocation(actId) {
    });
 }
 function activityLocationSuccess(data, textStatus, jqXHR){
+	console.log(data.location);
 	for(var location of data.location){
 		console.log(location.latitude);
 		console.log(location.longitude);
