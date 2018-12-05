@@ -1,75 +1,65 @@
 function sendReqForForecastWeather() {
 	var zip = $("#zip").val();
+	var key = "069f328bfcad49e68de3f1d28f47730c";
+	var units = "I";
+	var days = 5;
+	var card = "";
+	var day = new Date().getDay();
    $.ajax({
-      url: "http://api.openweathermap.org/data/2.5/forecast",
+      url: "http://api.weatherbit.io/v2.0/forecast/daily",
       jsonp: "callback",
       dataType: "jsonp",
-      data: {zip: zip, units: "imperial", appid: "ceaff4ec24d67747b355a633bfa325f9" }
+      data: {postal_code: zip, units: units, key: key, days: days }
    }).done(function(data) {
-	  $("#unixTime").html(data.list[0].dt_txt);
-      $("#zipEntered").html(zip);
-      $("#currentTemp").html(data.list[0].main.temp);
-      $("#minTemp").html(data.list[0].main.temp_min);
-      $("#maxTemp").html(data.list[0].main.temp_max);
-	  $("#humidity").html(data.list[0].main.humidity);
+	   	$("#zipEntered").html(zip);
+	   $("#forecastCity").html(data.city_name);
+	   
+	   	for(var i=0; i < data.data.length; i++){
+			if(i>0){
+			day = 1 + day;
+			if(day>6){day=0;};
+			}
+			
+			card += "<div class=''><div class='days card shadow-lg mx-4 my-3' style='width: 18rem;''><div class='card-body' id='iconHere'><img class='card-img-top' src='https://www.weatherbit.io/static/img/icons/" + data.data[i].weather.icon + ".png' alt='Weather Image'><h5 class='card-title' id='date'>"  + dayOfWeek(day,i) + "</h5><span>" + data.data[i].valid_date +"</span><p class='card-text'>" + "<br>" + data.data[i].weather.description + "<br>Maximum Temperature:" + data.data[i].max_temp + " &deg;F<br>Minimum Temperature: " + data.data[i].min_temp + " &deg;F<br>UV Index: " + data.data[i].uv.toFixed(1) + "</p></div></div></div>";
+     	}
+	   $("#beforeThis").before(card);
    }).fail(function(jqXHR) {
-      $("#error").html("Error retrieving the UV 1 weather.");
+      $("#error").html("Error retrieving the weather.");
    });
 }
-function sendReqForNowWeather() {
-	var zip = $("#zip").val();
-   $.ajax({
-      url: "http://api.openweathermap.org/data/2.5/weather",
-      jsonp: "callback",
-      dataType: "jsonp",
-      data: {zip: zip, units: "imperial", appid: "ceaff4ec24d67747b355a633bfa325f9" }
-   }).done(function(data) {
-	   lat = data.coord.lat;
-	  $("#unixTime1").html(data.dt);
-      $("#currentTemp1").html(data.main.temp);
-      $("#minTemp1").html(data.main.temp_min);
-      $("#maxTemp1").html(data.main.temp_max);
-   }).fail(function(jqXHR) {
-      $("#error").html("Error retrieving the UV 2 weather.");
-   });
-}
-
-
-$(function(){
-	$("#pressZip").click(function(){
-		sendReqForForecastWeather();
-		sendReqForNowWeather();
-		//sendReqForForecastUV();
-		sendReqForNowUV();
-	})
+$(function() {
+$("#pressZip").click(function(){
+    var zip = $("#zip").val();
+    sendReqForForecastWeather();
+}); 
 });
 
-function sendReqForForecastUV(){
-	var lat = 32.22;
-	var lon = -110.926392;
-	$.ajax({
-      	url: "http://api.openweathermap.org/data/2.5/uvi/forecast",
-      	jsonp: "callback",
-      	dataType: "jsonp",
-      	data: {lat: lat, lon: lon, cnt: 5, appid: "ceaff4ec24d67747b355a633bfa325f9" }
-   	}).done(function(data) {
-		$("#UVForecast").html(data[0].value);
-   	}).fail(function(jqXHR) {
-      		$("#error").html("Error retrieving the UV 3 weather.");
-	});
-	
-}
-function sendReqForNowUV(){
-	var lat = "32.22";
-	var lon = "-110.926392";
-	$.ajax({
-      	url: "http://api.openweathermap.org/data/2.5/uvi",
-      	jsonp: "callback",
-      	dataType: "jsonp",
-      	data: {lat: lat, lon: lon, appid: "ceaff4ec24d67747b355a633bfa325f9" }
-	}).done(function(data) {
-		$("#UVNow").html(data);
-	}).fail(function(jqXHR) {
-		$("#error").html("Error retrieving the UV 4 weather.");
-	});	
+function dayOfWeek(dayOfWeek,first){
+	var output = "";
+	if(first === 0){
+		output = "Today";
+	}
+	else if(dayOfWeek === 0)
+	{
+		output = "Sunday";
+	}
+	else if(dayOfWeek === 1){
+		output = "Monday";
+	}
+	else if(dayOfWeek === 2){
+		output = "Tuesday";
+	}
+	else if(dayOfWeek === 3){
+		output = "Wednesday";
+	}
+	else if(dayOfWeek === 4){
+		output = "Thursday";
+	}
+	else if(dayOfWeek === 5){
+		output = "Friday";
+	}
+	else if(dayOfWeek === 6){
+		output = "Saturday";
+	}
+	return output;
 }

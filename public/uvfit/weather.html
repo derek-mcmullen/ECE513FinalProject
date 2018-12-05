@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html>
-   <title>Weather</title>
-   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="javascripts/jquery/jquery.min.js"></script>
    <script src="javascripts/forecast.js"></script>
-   <body>
-	   <h2>Weather for </h2>
-	   <input type="text" id="zip"><button id="pressZip">Submit</button>
-	
-	  <p>Zip Entered: <span id="zipEntered"></span></p>
-		<p id="forecastLat"></p>
-	   	<p id="forecastLon"></p>
-	   	<p id="nowLat"></p>
-	   	<p id="nowLon"></p>
-      <p id="error" style="color:red"></p>
-	  <p>Time of Weather: <span id="unixTime"></span></p>
-      <p>Current temp: <span id="currentTemp"></span> &deg;F</p>
-	  <p>Minimum temp: <span id="minTemp"></span> &deg;F</p>
-	  <p>Maximum temp: <span id="maxTemp"></span> &deg;F</p>
-      <p>Humidity: <span id="humidity"></span>%</p>
-	  <p>UV Index: <span id="UVForecast"></span></p>
-	
-	  <p>Time of Weather: <span id="unixTime1"></span></p>
-      <p>Current temp: <span id="currentTemp1"></span> &deg;F</p>
-	  <p>Minimum temp: <span id="minTemp1"></span> &deg;F</p>
-	  <p>Maximum temp: <span id="maxTemp1"></span> &deg;F</p>
-		<p>UV Index: <span id="UVNow"></span></p>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<body>
+		<input type="text" id="zip">
+	   <button type="button" id="pressZip">Submit</button>
+    <div class="local_weather container-fluid border-bottom" style="background-color: " >
+		<h2 class="display-3">5 day Weather Forecast for <span id="forecastCity"></span></h2>
+		<p>Results from zipcode: <span id="zipEntered"></span></p>
+		<div class="row justify-content-center">
 
-   </body>
+        
+    
+		<div id="beforeThis"></div>
+		</div>
+		</div>
+	</body>
 </html>
+
