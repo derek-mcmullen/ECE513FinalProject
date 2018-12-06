@@ -206,6 +206,8 @@ router.post('/update', function(req, res, next) {
         logged: false,
         message : "",
     };
+	
+	console.log(req.body.data2); 
 
     // Ensure the request includes the deviceId parameter
     if( !req.body.hasOwnProperty("deviceId")) {
@@ -219,9 +221,17 @@ router.post('/update', function(req, res, next) {
         if (device !== null) {
 	    
 		// log this activity if API key matches
-		var js = req.body.data;
-		var obj = JSON.parse(js);
-	
+		var js; 
+		var obj; 
+		
+		if (req.body.hasOwnProperty("data") ) { 
+			js = req.body.data;
+			obj = JSON.parse(js);
+		}
+		if (req.body.hasOwnProperty("data2") ) { 
+			js = JSON.stringify(req.body.data2);
+		    obj = JSON.parse(js); 
+		} 
 		// TODO: check the API key
 	
 		 /* To help save space in the string we use the following encoding:
@@ -244,6 +254,7 @@ router.post('/update', function(req, res, next) {
 				speed: obj.c, 						//req.body.speed, 
 				uv: obj.d							//req.body.uv
             });
+		
 
  	    // Save activity. If successful, return success. If not, return error message.
             newActivity.save(function(err, newActivity) {
