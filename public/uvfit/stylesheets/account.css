@@ -80,3 +80,9 @@
     text-decoration: none;
     cursor: pointer;
 }
+#map {
+  margin: auto;
+  width: 75%;
+  border: 3px solid blue;
+  padding: 10px;
+}

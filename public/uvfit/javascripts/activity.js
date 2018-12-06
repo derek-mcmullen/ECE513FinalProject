@@ -19,11 +19,58 @@ function sendReqForActivityLocation(actId) {
    });
 }
 function activityLocationSuccess(data, textStatus, jqXHR){
-	console.log(data.location);
-	for(var location of data.location){
-		console.log(location.latitude);
-		console.log(location.longitude);
+	//console.log(data.location);
+	//$("map").show();
+	var coordinates = data.location;
+	var mapData = [];
+	//console.log(coordinates[0]['latitude']);
+	var i = 0;
+	for(i=0; i<data.location.length;i++){
+		var obj = {
+			lat: coordinates[i]['latitude'],
+			lng: coordinates[i]['longitude']
+		};
+		mapData.push(obj);
 	}
+	console.log(mapData);
+	//initMap();
+	var flightPlanCoordinates = [
+          {lat: 37.772, lng: -122.214},
+          {lat: 21.291, lng: -157.821},
+          {lat: -18.142, lng: 178.431},
+          {lat: -27.467, lng: 153.027}
+    ];
+	console.log(flightPlanCoordinates);
+	var lineSymbol = {
+        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+    };
+var map = new google.maps.Map(document.getElementById("map"), {
+		zoom: 3,
+		center: {lat: 32, lng:-110 },
+		mapTypeId: 'terrain'
+});
+var activityPath = new google.maps.Polyline({
+		path: flightPlanCoordinates,
+		icons: [{
+                icon: lineSymbol,
+                repeat:'35px',
+                offset: '100%'
+            }],
+		geodesic: true,
+		strokeColor: '#FF0000',
+		strokeOpacity: 1.0,
+		strokeWeight: 2
+	});
+	
+activityPath.setMap(map);
+}
+
+function initMap() {
+	var map = new google.maps.Map(document.getElementById("map"), {
+		zoom: 3,
+		center: {lat: 0, lng: -180},
+		mapTypeId: 'terrain'
+});
 }
 
 function activityInfoSuccess(data, textStatus, jqXHR){
@@ -64,12 +111,19 @@ function allTablePopulate(data, textStatus, jqXHR){
 					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
-					{title:"Activity ID",field:"activityid",width:1},
+					{title:"Activity ID",field:"activityid", visible:false},
 			],
 			rowClick:function(e, row){ //trigger an alert message when the row is clicked
 				var cells = row.getCells();
- 				alert("Activity ID " + cells[6].getValue() + " Clicked");
+				var modal = document.getElementById("myModal");
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
+				modal.style.display = "block";
+				
+ 				//alert("Activity ID " + cells[6].getValue() + " Clicked");
 				sendReqForActivityLocation((cells[6].getValue()));
+				$("#mapDuration").html((cells[2].getValue()));
+				$("#activityMap").html((cells[0].getValue()));
  			},
 		});
 	$("#error").hide();
@@ -95,7 +149,7 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)), activityid: activity.activityId};
 		}
 		if(activity.activityType === "Walking"){
 		data1[i] = tabledata;
@@ -116,9 +170,19 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
+					{title:"Activity ID",field:"activityid", visible:false},
 			],
 			rowClick:function(e, row){ //trigger an alert message when the row is clicked
- 				alert("Row " + row.getData().id + " Clicked!!!!");
+ 				var cells = row.getCells();
+				var modal = document.getElementById("myModal");
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
+				modal.style.display = "block";
+
+ 				//alert("Activity ID " + cells[6].getValue() + " Clicked");
+				sendReqForActivityLocation((cells[5].getValue()));
+				$("#mapDuration").html((cells[2].getValue()));
+				$("#activityMap").html("walking");
  			},
 		});
 	$("#error").hide();
@@ -144,7 +208,7 @@ function runningTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)),activityid: activity.activityId};
 		}
 		if(activity.activityType === "Running"){
 		data1[i] = tabledata;
@@ -165,9 +229,19 @@ function runningTablePopulate(data, textStatus, jqXHR){
 					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
+					{title:"Activity ID",field:"activityid", visible:false},
 			],
 			rowClick:function(e, row){ //trigger an alert message when the row is clicked
- 				alert("Row " + row.getData().id + " Clicked!!!!");
+ 				var cells = row.getCells();
+				var modal = document.getElementById("myModal");
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
+				modal.style.display = "block";
+				
+ 				//alert("Activity ID " + cells[6].getValue() + " Clicked");
+				sendReqForActivityLocation((cells[5].getValue()));
+				$("#mapDuration").html((cells[2].getValue()));
+				$("#activityMap").html("running");
  			},
 		});
 	$("#error").hide();
@@ -193,7 +267,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1))};
+		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)),activityid: activity.activityId};
 		}
 		if(activity.activityType === "Biking"){
 		data1[i] = tabledata;
@@ -215,9 +289,19 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 					{title:"Calories Burned",field:"calories",align:"center", bottomCalc:"avg"},
 					{title:"UV Index",field:"uv",align:"center",bottomCalc:"avg"},
 					{title:"Speed",field:"speed",align:"center",bottomCalc:"avg"},
+					{title:"Activity ID",field:"activityid", visible:false},
 			],
 			rowClick:function(e, row){ //trigger an alert message when the row is clicked
- 				alert("Row " + row.getData().id + " Clicked!!!!");
+ 				var cells = row.getCells();
+				var modal = document.getElementById("myModal");
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
+				modal.style.display = "block";
+				
+ 				//alert("Activity ID " + cells[6].getValue() + " Clicked");
+				sendReqForActivityLocation((cells[5].getValue()));
+				$("#mapDuration").html((cells[2].getValue()));
+				$("#activityMap").html("biking");
  			},
 		});
 	$("#error").hide();
@@ -258,6 +342,9 @@ function updateRadio(){
 }
 // Handle authentication on page load
 $(function() {
+	var modal = document.getElementById("myModal");
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
    // If there's no authToekn stored, redirect user to 
    // the sign-in page (which is index.html)
    if (!window.localStorage.getItem("authToken")) {
@@ -271,6 +358,14 @@ $(function() {
 	}
 
    // Register event listeners
+	$('.close').click(function(){
+				modal.style.display = "none";
+	});
+	$(window).click(function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+});
 //$("input[type='radio']").change(updateRadio);
 	$("#populateMyDevices").change(updateRadio);
 
