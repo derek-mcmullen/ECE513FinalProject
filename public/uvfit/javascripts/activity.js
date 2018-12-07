@@ -90,7 +90,7 @@ function allTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{actType: activity.activityType, date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)), activityid: activity.activityId };
+		{actType: activity.activityType, date: activity.date, duration: durationString, calories: cal, uv: activity.uv.toFixed(1), speed: parseFloat(activity.speed.toFixed(1)), activityid: activity.activityId };
 		}
 		data1[i] = tabledata;
 		i += 1;
@@ -149,7 +149,7 @@ function walkingTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)), activityid: activity.activityId};
+		{date: activity.date, duration: durationString, calories: cal, uv: activity.uv.toFixed(1), speed: parseFloat(activity.speed.toFixed(1)), activityid: activity.activityId};
 		}
 		if(activity.activityType === "Walking"){
 		data1[i] = tabledata;
@@ -208,7 +208,7 @@ function runningTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)),activityid: activity.activityId};
+		{date: activity.date, duration: durationString, calories: cal, uv: activity.uv.toFixed(1), speed: parseFloat(activity.speed.toFixed(1)),activityid: activity.activityId};
 		}
 		if(activity.activityType === "Running"){
 		data1[i] = tabledata;
@@ -267,7 +267,7 @@ function bikingTablePopulate(data, textStatus, jqXHR){
 		var durationString = parseFloat(activityDuration(activity.duration));
 		var cal = parseFloat((activity.calories).toFixed(1));
 		var tabledata = 
-		{date: "date", duration: durationString, calories: cal, uv: activity.uv, speed: parseFloat(activity.speed.toFixed(1)),activityid: activity.activityId};
+		{date: activity.date, duration: durationString, calories: cal, uv: activity.uv.toFixed(1), speed: parseFloat(activity.speed.toFixed(1)),activityid: activity.activityId};
 		}
 		if(activity.activityType === "Biking"){
 		data1[i] = tabledata;
