@@ -88,10 +88,10 @@
 			<h5 class="mr-2">Find Local Users within</h5>
     		<select class="form-control" id="mileRadius">
       			<option>1</option>
-      			<option>2</option>
-      			<option>3</option>
-      			<option>4</option>
       			<option>5</option>
+      			<option>10</option>
+      			<option>25</option>
+      			<option>50</option>
     		</select>
 			<h5 class="ml-1 mr-2">miles of</h5>
 			<h5 class="mr-2"> zipcode: </h5>
@@ -99,7 +99,7 @@
 			<button type="button" id="submitButton">Submit</button>
 		</div>
 			<div id="localUserData">
-			<p>In the past 7 days the most popular activity in <span id="zipcodeLocal"></span> was <span id="mostPopularLocal"></span>. Your local community selected completed a total of <span id="activityCountAllLocal"></span> activities with an average total distance of <span id="averageDistanceAllLocal"></span>. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllLocal"></span> and on average were exposed to a <span id="averageUVAllLocal"></span> UV Index.</p>
+			<p>In the past 7 days the most popular activity in <span id="zipcodeLocal"></span> was <span id="mostPopularLocal"></span>. Your local community selected completed a total of <span id="activityCountAllLocal"></span> activities with an average total distance of <span id="averageDistanceAllLocal"></span> meters. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllLocal"></span> and on average were exposed to a <span id="averageUVAllLocal"></span> UV Index.</p>
 			<p>Individual activity types averages are broken down below.</p>
 			<div class="card shadow-lg mx-4 my-3">
 				<h5 class="card-header">All</h5>
@@ -107,7 +107,7 @@
     				<h5 class="card-title">All Activity Averages for Local Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityAll"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceAll"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesAll"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVAll"></span> UV Index</li>
   					</ul>
@@ -119,7 +119,7 @@
     				<h5 class="card-title">Walking Activity Averages for Local Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityWalking"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceWalking"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceWalking"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesWalking"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVWalking"></span> UV Index</li>
   					</ul>
@@ -131,7 +131,7 @@
     				<h5 class="card-title">Running Activity Averages for Local Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityRunning"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceRunning"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceRunning"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesRunning"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVRunning"></span> UV Index</li>
   					</ul>
@@ -143,7 +143,7 @@
     				<h5 class="card-title">Biking Activity Averages for Local Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityBiking"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceBiking"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceBiking"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesBiking"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVBiking"></span> UV Index</li>
   					</ul>
@@ -154,7 +154,7 @@
 		  
 		  <div class="col-lg-5" id="all">
           	<h1>All Users Data View</h1>	
-			<p>In the past 7 days the most popular activity in was <span id="mostPopularAll"></span>. The whole UV Fit community completed a total of <span id="activityCountAllAll"></span> activities with an average total distance of <span id="averageDistanceAllAll"></span> Miles. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllAll"></span> and on average were exposed to a <span id="averageUVAllAll"></span> UV Index.</p>
+			<p>In the past 7 days the most popular activity in was <span id="mostPopularAll"></span>. The whole UV Fit community completed a total of <span id="activityCountAllAll"></span> activities with an average total distance of <span id="averageDistanceAllAll"></span> Meters. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllAll"></span> and on average were exposed to a <span id="averageUVAllAll"></span> UV Index.</p>
 			<p>Individual activity types averages are broken down below.</p>
 			<div class="card shadow-lg mx-4 my-3">
 				<h5 class="card-header">All</h5>
@@ -162,7 +162,7 @@
     				<h5 class="card-title">All Activity Averages for All Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityAllAll"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceAllAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceAllAll"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesAllAll"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVAllAll"></span> UV Index</li>
   					</ul>
@@ -174,7 +174,7 @@
     				<h5 class="card-title">Walking Activity Averages for All Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityWalkingAll"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceWalkingAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceWalkingAll"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesWalkingAll"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVWalkingAll"></span> UV Index</li>
   					</ul>
@@ -186,7 +186,7 @@
     				<h5 class="card-title">Running Activity Averages for All Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityRunningAll"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceRunningAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceRunningAll"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesRunningAll"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVRunningAll"></span> UV Index</li>
   					</ul>
@@ -198,7 +198,7 @@
     				<h5 class="card-title">Biking Activity Averages for All Users</h5>
     				<ul class="list-group list-group-flush">
     					<li class="list-group-item">Total number of activities: <span id="cardActivityBikingAll"></span> Activies Recorded</li>
-    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceBikingAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceBikingAll"></span> Meters</li>
     					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesBikingAll"></span> Calories Burned</li>
 						<li class="list-group-item">Average UV Exposure: <span id="cardUVBikingAll"></span> UV Index</li>
   					</ul>

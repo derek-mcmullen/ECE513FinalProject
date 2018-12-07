@@ -25,8 +25,8 @@ function activityLocationSuccess(data, textStatus, jqXHR){
 	var mapData = [];
 	mapData.length = 0;
 	//console.log(coordinates[0]['latitude']);
-	var i = 1;
-	for(i=1; i<data.location.length;i++){
+	var i = 0;
+	for(i=0; i<data.location.length;i++){
 		var obj = {
 			lat: coordinates[i]['latitude'],
 			lng: coordinates[i]['longitude']
@@ -119,7 +119,7 @@ function allTablePopulate(data, textStatus, jqXHR){
 				var span = document.getElementsByClassName("close")[0];
 				modal.style.display = "block";
 				
- 				alert("Activity ID " + cells[6].getValue() + " Clicked");
+ 				//alert("Activity ID " + cells[6].getValue() + " Clicked");
 				sendReqForActivityLocation((cells[6].getValue()));
 				$("#mapDuration").html((cells[2].getValue()));
 				$("#activityMap").html((cells[0].getValue()));
