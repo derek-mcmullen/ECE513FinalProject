@@ -1,0 +1,9 @@
+#localUserData{
+	display: none;
+}
+#all, #local{
+	border-style: solid;
+	border-color: black;
+	border-radius: 10px;
+	background-color: aliceblue;
+}

@@ -66,11 +66,7 @@ activityPath.setMap(map);
 }
 
 function initMap() {
-	var map = new google.maps.Map(document.getElementById("map"), {
-		zoom: 3,
-		center: {lat: 0, lng: -180},
-		mapTypeId: 'terrain'
-});
+
 }
 
 function activityInfoSuccess(data, textStatus, jqXHR){
@@ -131,7 +127,8 @@ function allTablePopulate(data, textStatus, jqXHR){
 	}
 	else{
 		$("#all-table-here").empty();
-		var prepString = "<h3 class='text-center'>There is currently no data for this device to display</h3>";
+		var prepString = "<h3 class='text-center' id='tableEmptyHere'>There is currently no data for this device to display</h3>";
+		//$("#all-table-here").css({"background-color":"white", "border":"none"} );
 		$("#all-table-here").html(prepString);
 		$("#error").hide();
 		$("#main").show();

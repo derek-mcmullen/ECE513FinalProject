@@ -17,3 +17,6 @@ $(window).click(function(event) {
         modal.style.display = "none";
     }
 });
+$("#UVThreshold").on("input change", function () {
+    $("#updateThreshold").css("display", "block");
+});

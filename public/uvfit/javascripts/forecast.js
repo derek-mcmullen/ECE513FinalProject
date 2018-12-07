@@ -1,3 +1,4 @@
+var i = 0;
 function sendReqForForecastWeather() {
 	var zip = $("#zip").val();
 	var key = "069f328bfcad49e68de3f1d28f47730c";
@@ -28,7 +29,10 @@ function sendReqForForecastWeather() {
    });
 }
 $(function() {
+$("#hideMe").hide();
 $("#pressZip").click(function(){
+	$("#hideMe").show();
+	$("#hideMe2").hide();
     var zip = $("#zip").val();
     sendReqForForecastWeather();
 }); 

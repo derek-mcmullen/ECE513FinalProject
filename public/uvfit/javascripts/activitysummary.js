@@ -57,15 +57,15 @@ function activitySumSuccess(data, textStatus, jqXHR){
 		
 	}
 	$("#error").hide();
-	$("#totalWalkingTime").html(durationStringWalk);
-	$("#totalWalkingCalories").html(caloriesBurnedWalk);
-	$("#totalWalkingUV").html(averageUVWalk);
-	$("#totalRunningTime").html(durationStringRun);
-	$("#totalRunningCalories").html(caloriesBurnedRun);
-	$("#totalRunningUV").html(averageUVRun);
-	$("#totalBikingTime").html(durationStringBike);
-	$("#totalBikingCalories").html(caloriesBurnedBike);
-	$("#totalBikingUV").html(averageUVBike);
+	$("#totalWalkingTime").html(durationStringWalk.toFixed(1));
+	$("#totalWalkingCalories").html(caloriesBurnedWalk.toFixed(0));
+	$("#totalWalkingUV").html(averageUVWalk.toFixed(1));
+	$("#totalRunningTime").html(durationStringRun.toFixed(1));
+	$("#totalRunningCalories").html(caloriesBurnedRun.toFixed(0));
+	$("#totalRunningUV").html(averageUVRun.toFixed(1));
+	$("#totalBikingTime").html(durationStringBike.toFixed(1));
+	$("#totalBikingCalories").html(caloriesBurnedBike.toFixed(0));
+	$("#totalBikingUV").html(averageUVBike.toFixed(1));
 	
 }
 
