@@ -68,20 +68,19 @@ router.get('/summary/:devid', function(req, res, next) {
 					cals = duration * (10/60);
 				} 
 			
+			
+				var date = new Date(startTime*1000);
+				dateString = "" + (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear(); 
 		    	// push data onto response
-				responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
+				responseJson.activity.push({ "deviceId": devID, "date":dateString, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
 		    }
 		    // start a new activity
 		    activityNum = doc.activityId; 
 		    devID = doc.deviceId; 
+		
+			startTime = doc.timeStamp; 
+			stopTime = doc.timeStamp; 
 			
-			if (doc.timeStamp < startTime) { 
-				startTime = doc.timeStamp; 
-			} 
-			if (doc.timeStamp >= stopTime) { 
-				stopTime = doc.timeStamp; 
-			}
-
 			avgSpeed = doc.speed; 
 		    avgUV = doc.uv; 
 		    activityCount = 1; 
@@ -89,8 +88,8 @@ router.get('/summary/:devid', function(req, res, next) {
 	 }
 	
 		// still need to post the final activity
-		avgSpeed = avgSpeed / activityCount; 
-       	avgUV = avgUV / activityCount; 
+		avgSpeed = (avgSpeed / activityCount); 
+       	avgUV = (avgUV / activityCount); 
 		duration = stopTime - startTime; 
 		
 		
@@ -104,9 +103,11 @@ router.get('/summary/:devid', function(req, res, next) {
 			actType = "Biking"; 
 			cals = duration * (10/60); 
 		} 
-
+		
+		var date = new Date(startTime*1000);
+		dateString = "" + (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear(); 
 		// push data onto response
-		responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
+		responseJson.activity.push({ "deviceId": devID, "date":dateString, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
       }
       res.status(200).json(responseJson);
     }).sort({activityId:-1, timeStamp:1});    
@@ -184,9 +185,18 @@ router.get('/location/:actid', function(req, res, next) {
 			responseJson["location"] = [];  
 
 
+			 
 			// push location data onto response
 			for (var doc of allActivity) {
-				responseJson.location.push({ "latitude" : doc.latitude, "longitude": doc.longitude });
+				if (doc.latitude == 0 || doc.longitude == 0) {
+				} else {	
+					latDecDegrees = Math.floor(doc.latitude/100); 
+					latDecDegrees += ((doc.latitude/100 - latDecDegrees)/60)*100; 
+					lngDecDegrees = Math.floor(doc.longitude/100); 
+					lngDecDegrees += ((doc.longitude/100 - lngDecDegrees)/60)*100; 		
+					
+					responseJson.location.push({ "latitude" : latDecDegrees, "longitude": (-1*lngDecDegrees) });
+				}
 			}
 		}
 	res.status(200).json(responseJson);
@@ -221,15 +231,18 @@ router.post('/update', function(req, res, next) {
 		// log this activity if API key matches
 		var js; 
 		var obj; 
+		var stringify; 
 		
 		if (req.body.hasOwnProperty("data") ) { 
 			js = req.body.data;
+			//stringify = JSON.stringify(js); 
 			obj = JSON.parse(js);
 		}
 		if (req.body.hasOwnProperty("data2") ) { 
 			js = JSON.stringify(req.body.data2);
 		    obj = JSON.parse(js); 
 		} 
+		
 		// TODO: check the API key
 	
 		 /* To help save space in the string we use the following encoding:
@@ -241,8 +254,7 @@ router.post('/update', function(req, res, next) {
              t) Unix timestamp
              k) API key
           */
-
-	    // Create a new activity with specified id, times, and sensor info values.
+		// Create a new activity with specified id, times, and sensor info values.
             var newActivity = new Activity({
                 deviceId: req.body.deviceId,
 				activityId: obj.i, 					//req.body.activityId,
@@ -253,7 +265,7 @@ router.post('/update', function(req, res, next) {
 				uv: obj.d							//req.body.uv
             });
 		
-
+	
  	    // Save activity. If successful, return success. If not, return error message.
             newActivity.save(function(err, newActivity) {
                 if (err) {
@@ -467,22 +479,22 @@ router.get('/allUsers', function(req, res, next) {
 		responseJson.allActCount = totCount; 
 		responseJson.allCalories = (totCals / totCount).toFixed(0); 
 		responseJson.allUV = (totUV / totCount).toFixed(1); 
-		responseJson.allDistance = (totDist / totCount).toFixed(2); 
+		responseJson.allDistance = ((totDist / totCount)*1000).toFixed(2); 
 		
 		responseJson.walkActCount = wkCount; 
 		responseJson.walkCalories = (wkCals / wkCount).toFixed(0); 
 		responseJson.walkUV = (wkUV / wkCount).toFixed(1); 
-		responseJson.walkDistance = (wkDist / wkCount).toFixed(2); 
+		responseJson.walkDistance = ((wkDist / wkCount)*1000).toFixed(2); 
 		
 		responseJson.runActCount = rnCount; 
 		responseJson.runCalories = (rnCals / rnCount).toFixed(0); 
 		responseJson.runUV = (rnUV / rnCount).toFixed(1); 
-		responseJson.runDistance = (rnDist / rnCount).toFixed(2); 
+		responseJson.runDistance = ((rnDist / rnCount)*1000).toFixed(2); 
 		
 		responseJson.bikeActCount = bkCount; 
 		responseJson.bikeCalories = (bkCals / bkCount).toFixed(0); 
 		responseJson.bikeUV = (bkUV / bkCount).toFixed(1); 
-		responseJson.bikeDistance = (bkDist / bkCount).toFixed(2); 
+		responseJson.bikeDistance = ((bkDist / bkCount)*1000).toFixed(2); 
 				
 		// push data onto response
 		//responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
@@ -494,9 +506,9 @@ router.get('/allUsers', function(req, res, next) {
 // POST request return one or "all" activity data summarized 
 router.post('/local', function(req, res, next) {
 	
-	var centerLat = req.params.centerLat;
-	var centerLng = req.params.centerLng; 
-	var radiusKm = req.params.miles * 1.60934; 
+	var centerLat = req.body.centerLat;
+	var centerLng = req.body.centerLng;  
+	var radiusKm = req.body.miles * 1.60934; 
 	
     var responseJson = { 	allActCount: 0,
 							allDistance: 0,
@@ -674,22 +686,22 @@ router.post('/local', function(req, res, next) {
 		responseJson.allActCount = totCount; 
 		responseJson.allCalories = (totCals / totCount).toFixed(0); 
 		responseJson.allUV = (totUV / totCount).toFixed(1); 
-		responseJson.allDistance = ((totDist / totCount)/1000).toFixed(2); 
+		responseJson.allDistance = ((totDist / totCount)*1000).toFixed(2); 
 		
 		responseJson.walkActCount = wkCount; 
 		responseJson.walkCalories = (wkCals / wkCount).toFixed(0); 
 		responseJson.walkUV = (wkUV / wkCount).toFixed(1); 
-		responseJson.walkDistance = ((wkDist / wkCount)/1000).toFixed(2); 
+		responseJson.walkDistance = ((wkDist / wkCount)*1000).toFixed(2); 
 		
 		responseJson.runActCount = rnCount; 
 		responseJson.runCalories = (rnCals / rnCount).toFixed(0); 
 		responseJson.runUV = (rnUV / rnCount).toFixed(1); 
-		responseJson.runDistance = ((rnDist / rnCount)/1000).toFixed(2); 
+		responseJson.runDistance = ((rnDist / rnCount)*1000).toFixed(2); 
 		
 		responseJson.bikeActCount = bkCount; 
 		responseJson.bikeCalories = (bkCals / bkCount).toFixed(0); 
 		responseJson.bikeUV = (bkUV / bkCount).toFixed(1); 
-		responseJson.bikeDistance = ((bkDist / bkCount)/1000).toFixed(2); 
+		responseJson.bikeDistance = ((bkDist / bkCount)*1000).toFixed(2); 
 				
 		// push data onto response
 		//responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});

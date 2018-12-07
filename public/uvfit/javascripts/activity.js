@@ -47,7 +47,7 @@ function activityLocationSuccess(data, textStatus, jqXHR){
         path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
     };
 var map = new google.maps.Map(document.getElementById("map"), {
-		zoom:8,
+		zoom:10,
 		center: mapData[1],
 		mapTypeId: 'roadmap'
 });

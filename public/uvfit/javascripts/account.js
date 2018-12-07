@@ -27,7 +27,7 @@ $(function() {
 			url: '/devices/uvedit',
 			type: 'POST',
 			headers: { 'x-auth': window.localStorage.getItem("authToken") },
-			data: { deviceId: 31002b000747363339343638, 
+			data: { deviceId: "31002b000747363339343638", 
 					newUV: (1000 - $("#UVThreshold").val()) }, 
 			responseType: 'json',
 			success: uvSuccess,
