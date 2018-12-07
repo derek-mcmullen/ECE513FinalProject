@@ -87,6 +87,7 @@ router.get("/account" , function(req, res) {
             userStatus['email'] = user.email;
             userStatus['fullName'] = user.fullName;
             userStatus['lastAccess'] = user.lastAccess;
+			userStatus['uv'] = user.UVThreshold; 
             
             // Find devices based on decoded token
 		      Device.find({ userEmail : decodedToken.email}, function(err, devices) {
@@ -110,7 +111,37 @@ router.get("/account" , function(req, res) {
    catch (ex) {
       return res.status(401).json({success: false, message: "Invalid authentication token."});
    }
+});
+
+router.get("/uv/:uvNum" , function(req, res) {
+   // Check for authentication token in x-auth header
+   if (!req.headers["x-auth"]) {
+      return res.status(401).json({success: false, message: "No authentication token"});
+   }
    
+   var authToken = req.headers["x-auth"];
+   
+   try {
+      var decodedToken = jwt.decode(authToken, secret);
+      
+      User.findOne({email: decodedToken.email}, function(err, user) {
+         if(err) {
+            return res.status(200).json({success: false, message: "User does not exist."});
+         }
+         else {
+			 
+			User.updateOne({ email: decodedToken.email }, { UVThreshold: req.params.uvNum }, function(err, res) {
+				// Updated at most one doc, `res.modifiedCount` contains the number
+				// of docs that MongoDB updated
+			}); 
+           
+            return res.status(200).json({success: true, message: "UV value updated"});            
+         }
+      });
+   }
+   catch (ex) {
+      return res.status(401).json({success: false, message: "Invalid authentication token."});
+   }
 });
 
 module.exports = router;

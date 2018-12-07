@@ -17,6 +17,40 @@ $(window).click(function(event) {
         modal.style.display = "none";
     }
 });
-$("#UVThreshold").on("input change", function () {
-    $("#updateThreshold").css("display", "block");
-});
+
+$(function() { 
+	$("#UVThreshold").on("input change", function () {
+		$("#updateThreshold").css("display", "block");
+	});
+	$("#updateThreshold").click(function() { 
+		$.ajax({
+			url: '/devices/uvedit',
+			type: 'POST',
+			headers: { 'x-auth': window.localStorage.getItem("authToken") },
+			data: { deviceId: 31002b000747363339343638, 
+					newUV: (1000 - $("#UVThreshold").val()) }, 
+			responseType: 'json',
+			success: uvSuccess,
+			error: uvError
+		});
+		$.ajax({
+			url: '/users/uv/' + $("#UVThreshold").val(),
+			type: 'GET',
+			headers: { 'x-auth': window.localStorage.getItem("authToken") },
+			responseType: 'json',
+			success: uvSuccess,
+			error: uvError
+		});		
+	}); 
+}); 
+
+function uvSuccess() { 
+	console.log("success"); 
+}
+
+function uvError() { 
+	console.log("failure"); 
+} 
+
+
+

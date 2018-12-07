@@ -13,6 +13,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 	$("#email").html(data.email);
 	$("#fullName").html(data.fullName);
 	$("#lastAccess").html(data.lastAccess);
+	$("#UVThreshold").val(data.uv); 
 	// Add the devices to the list before the list item for the add device button (link)
 	var prepString = ""
 	for (var device of data.devices) {
