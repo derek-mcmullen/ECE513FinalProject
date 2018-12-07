@@ -1,4 +1,3 @@
-
 // Get the modal
 var modal = document.getElementById("myModal");
 // Get the button that opens the modal
@@ -17,4 +16,7 @@ $(window).click(function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+});
+$("#UVThreshold").on("input change", function () {
+    $("#updateThreshold").css("display", "block");
 });

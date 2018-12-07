@@ -18,10 +18,14 @@
     <!-- Custom styles for this template -->
     <link href="stylesheets/modern-business.css" rel="stylesheet">
 	<link href="stylesheets/navbar.css" rel="stylesheet">
-	<script src="/uvfit/javascripts/navbar.js" defer></script>
-	<script src="/uvfit/javascripts/signout.js" defer></script>
+	<link href="stylesheets/communityActivity.css" rel="stylesheet">
 	<script src="javascripts/jquery/jquery.min.js"></script>
+	<script src="/uvfit/javascripts/navbar.js" defer></script>
+	<script src="/uvfit/javascripts/activityCommunity.js" defer></script>
+	<script src="/uvfit/javascripts/signout.js" defer></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTPjAjUk4GEVEgq126LmGcpXWMceeUKc8" type="text/javascript"></script>
     <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
   </head>
 
   <body>
@@ -70,17 +74,17 @@
         </div>
       </div>
     </nav>
-	  
-    <!-- Page Content -->
-    <div class="row col-12">
+	    <!-- Page Content -->
+    <div class="container-fluid">
       <!-- Page Heading/Breadcrumbs -->
-      <h1 class="text-center mt-4 mb-3">Community Activity</h1>
+      <h1 class="mt-4 mb-3"> UV Fit Community Activity <small>| Past 7 Days</small></h1>
       <!-- Intro Content -->
-      <div class="col-lg-12" id="">
-        <h1>Local Data View
-			<small>| Past 7 Days</small>
-		</h1>
-		<div class="form-inline col-12 mb-3">
+		<p>Ever wonder how you compare to other UV Fit users?</p>
+		<p>Check below to see how your activity compares to local users and to all of our users</p>  
+      <div class="row justify-content-md-center">
+        <div class="col-lg-5 mr-3" id="local">
+          	<h1>Local Data View</h1>	
+			<div class="form-inline mb-3">
 			<h5 class="mr-2">Find Local Users within</h5>
     		<select class="form-control" id="exampleFormControlSelect1">
       			<option>1</option>
@@ -91,72 +95,119 @@
     		</select>
 			<h5 class="ml-1 mr-2">miles of</h5>
 			<h5 class="mr-2"> zipcode: </h5>
-			<input class="form-control col-2" id="zipcode" placeholder="Enter Zipcode" type="text">
+			<input class="form-control" id="zipcode" placeholder="Enter Zipcode" type="text">
+			<button type="button" id="geocodeButton">Geocode</button>
 		</div>
+			<div id="localUserData">
+			<p>In the past 7 days the most popular activity in <span id="zipcodeLocal"></span> was <span id="mostPopularLocal"></span>. Your local community selected completed a total of <span id="activityCountAllLocal"></span> activities with an average total distance of <span id="averageDistanceAllLocal"></span>. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllLocal"></span> and on average were exposed to a <span id="averageUVAllLocal"></span> UV Index.</p>
+			<p>Individual activity types averages are broken down below.</p>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">All</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">All Activity Averages for Local Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityAll"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesAll"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVAll"></span> UV Index</li>
+  					</ul>
+  				</div>
+			</div>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">Walking</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">Walking Activity Averages for Local Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityWalking"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceWalking"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesWalking"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVWalking"></span> UV Index</li>
+  					</ul>
+  				</div>
+			</div>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">Running</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">Running Activity Averages for Local Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityRunning"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceRunning"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesRunning"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVRunning"></span> UV Index</li>
+  					</ul>
+  				</div>
+			</div>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">Biking</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">Biking Activity Averages for Local Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityBiking"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceBiking"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesBiking"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVBiking"></span> UV Index</li>
+  					</ul>
+  				</div>
+			</div>
+			</div>
+		  </div>
 		  
-			<ul class="nav nav-tabs nav-fill" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" href="#activityAllTabGeo" role="tab" data-toggle="tab">All Activity</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link" href="#activityWalkingTabGeo" role="tab" data-toggle="tab">Walking</a>
-  				</li>
-				<li class="nav-item">
-    				<a class="nav-link" href="#activityRunningTabGeo" role="tab" data-toggle="tab">Running</a>
-  				</li>
-				<li class="nav-item">
-    				<a class="nav-link" href="#activityBikingTabGeo" role="tab" data-toggle="tab">Biking</a>
-  				</li>
-			</ul>
-       </div>
-		<div class="tab-content col-12">
-				<div role="tabpanel" class="tab-pane active" id="activityAllTabGeo">
-					<div id="all-table-here-geo"></div>
-				</div>
-  				<div role="tabpanel" class="tab-pane fade" id="activityWalkingTabGeo">
-					<div id="walking-table-here-geo"></div>
-				</div>
-  				<div role="tabpanel" class="tab-pane fade" id="activityRunningTabGeo">
-					<div id="running-table-here-geo"></div>
-				</div>
-  				<div role="tabpanel" class="tab-pane fade" id="activityBikingTabGeo">
-					<div id="biking-table-here-geo"></div>
-				</div>
+		  <div class="col-lg-5" id="all">
+          	<h1>All Users Data View</h1>	
+			<p>In the past 7 days the most popular activity in was <span id="mostPopularAll"></span>. The whole UV Fit community completed a total of <span id="activityCountAllAll"></span> activities with an average total distance of <span id="averageDistanceAllAll"></span> Miles. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllAll"></span> and on average were exposed to a <span id="averageUVAllAll"></span> UV Index.</p>
+			<p>Individual activity types averages are broken down below.</p>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">All</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">All Activity Averages for All Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityAllAll"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceAllAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesAllAll"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVAllAll"></span> UV Index</li>
+  					</ul>
+  				</div>
 			</div>
-		<div class="col-lg-12" id="">
-         	<h1>All UVFit Users
-				<small>| Past 7 Days</small>
-			</h1>
-			<ul class="nav nav-tabs nav-fill" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" href="#activityAllTab" role="tab" data-toggle="tab">All Activity</a>
-				</li>
-				<li class="nav-item">
-    				<a class="nav-link" href="#activityWalkingTab" role="tab" data-toggle="tab">Walking</a>
-  				</li>
-				<li class="nav-item">
-    				<a class="nav-link" href="#activityRunningTab" role="tab" data-toggle="tab">Running</a>
-  				</li>
-				<li class="nav-item">
-    				<a class="nav-link" href="#activityBikingTab" role="tab" data-toggle="tab">Biking</a>
-  				</li>
-			</ul>
-			<div class="tab-content col-12">
-				<div role="tabpanel" class="tab-pane active" id="activityAllTab">
-					<div id="all-table-here"></div>
-				</div>
-  				<div role="tabpanel" class="tab-pane fade" id="activityWalkingTab">
-					<div id="walking-table-here"></div>
-				</div>
-				<div role="tabpanel" class="tab-pane fade" id="activityRunningTab">
-					<div id="running-table-here"></div>
-				</div>
-  				<div role="tabpanel" class="tab-pane fade" id="activityBikingTab">
-					<div id="biking-table-here"></div>
-				</div>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">Walking</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">Walking Activity Averages for All Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityWalkingAll"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceWalkingAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesWalkingAll"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVWalkingAll"></span> UV Index</li>
+  					</ul>
+  				</div>
 			</div>
-		</div>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">Running</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">Running Activity Averages for All Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityRunningAll"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceRunningAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesRunningAll"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVRunningAll"></span> UV Index</li>
+  					</ul>
+  				</div>
+			</div>
+			<div class="card shadow-lg mx-4 my-3">
+				<h5 class="card-header">Biking</h5>
+  				<div class="card-body">
+    				<h5 class="card-title">Biking Activity Averages for All Users</h5>
+    				<ul class="list-group list-group-flush">
+    					<li class="list-group-item">Total number of activities: <span id="cardActivityBikingAll"></span> Activies Recorded</li>
+    					<li class="list-group-item">Average Total Distance: <span id="cardDistanceBikingAll"></span> Miles</li>
+    					<li class="list-group-item">Average Total Calories Burned: <span id="cardCaloriesBikingAll"></span> Calories Burned</li>
+						<li class="list-group-item">Average UV Exposure: <span id="cardUVBikingAll"></span> UV Index</li>
+  					</ul>
+  				</div>
+			</div>
+		  </div>
       </div>
+      <!-- /.row -->
+    </div>
     <!-- /.container -->
 
     <!-- Footer -->
@@ -166,6 +217,6 @@
       </div>
       <!-- /.container -->
     </footer>
-  </body>
-
+  </body> 
+    
 </html>

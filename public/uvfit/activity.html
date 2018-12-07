@@ -18,15 +18,16 @@
 	  
     <!-- Custom styles for this template -->  
 	<link href="stylesheets/modern-business.css" rel="stylesheet">
-    <link href="stylesheets/signin.css" rel="stylesheet">
+    
 	<link href="stylesheets/navbar.css" rel="stylesheet">
 	<link href="/uvfit/stylesheets/uvfit.css" rel="stylesheet">
+	<link href="stylesheets/account.css" rel="stylesheet">
 	<script src="javascripts/jquery/jquery.min.js"></script>
 	<script src="/uvfit/javascripts/navbar.js" defer></script>
 	<script src="/uvfit/javascripts/signout.js" defer></script>
 	<script src="/uvfit/javascripts/activity1.js"></script>
 	<script src="/uvfit/javascripts/activity.js"></script>
-	<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTPjAjUk4GEVEgq126LmGcpXWMceeUKc8&callback=initMap" type="text/javascript"></script>-->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTPjAjUk4GEVEgq126LmGcpXWMceeUKc8&callback=initMap" type="text/javascript"></script>
     <script src="stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
 	</head>
 
@@ -78,8 +79,8 @@
     </nav>
 	  
 	  
-	<div class="row col-12" id="main">
-		<div class="col-12" id="activityDiv">
+	<div class="container-fluid align-top mt-4" id="main">
+		<div class="col-lg-12" id="activityDiv">
 			<h3> Select device to view activity: </h3>
 			<!--<input type="radio" id="getIDPlease" name="devices" value="12">12
 			<input type="radio" id="getIDPlease2" name="devices" value="123">123-->
@@ -115,6 +116,17 @@
 			</div>
 				<div class="text-danger" id="error"></div>
 		</div>
+		<!-- The Modal -->
+				<div id="myModal" class="modal">
+  					<!-- Modal content -->
+  					<div class="modal-content">
+    					<span class="close">&times;</span>
+						<h2>Map of your activity</h2>
+						<p>It took you <span id="mapDuration"></span> minutes <span class="text-lowercase" id="activityMap"></span> to complete this activity shown below.</p>
+							<div class ="row col-10" id="map"></div>
+  					</div>
+				</div>
 	</div>
+	
   </body>
 </html>
