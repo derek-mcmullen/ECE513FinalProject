@@ -206,8 +206,6 @@ router.post('/update', function(req, res, next) {
         logged: false,
         message : "",
     };
-	
-	console.log(req.body.data2); 
 
     // Ensure the request includes the deviceId parameter
     if( !req.body.hasOwnProperty("deviceId")) {
@@ -278,5 +276,456 @@ router.post('/update', function(req, res, next) {
         }
     });
 });
+
+// GET request return all activity data summarized for ALL USERS
+router.get('/allUsers', function(req, res, next) {
+    var responseJson = { 	allActCount: 0,
+							allDistance: 0,
+							allCalories: 0, 
+							allUV: 0, 
+							walkActCount: 0, 
+							walkDistance: 0, 
+							walkCalories: 0,
+							walkUV: 0, 
+							runActCount: 0, 
+							runDistance: 0, 
+							runCalories: 0, 
+							runUV: 0, 
+							bikeActCount: 0, 
+							bikeDistance: 0, 
+							bikeCalories: 0, 
+							bikeUV: 0 };
+
+    var query = {};
+
+    Activity.find(query, function(err, allActivity) {
+      if (err) {
+        var errorMsg = {"message" : err};
+        res.status(400).json(errorMsg);
+      }
+      else {
+		activityNum = -1; 
+		devID = -1; 
+		activityCount = 0;  
+		avgSpeed = 0; 
+		avgUV = 0;
+		prevLat = 0; 
+		prevLng = 0; 
+		actDist = 0; 
+		startTime = 999999999999; 
+		stopTime = -1; 
+		cals = 0; 
+		
+		totCount = 0; 
+		totCals = 0; 
+		totUV = 0; 
+		totDist = 0; 
+		wkCount = 0; 
+		wkCals = 0; 
+		wkUV = 0; 
+		wkDist = 0; 
+		rnCount = 0; 
+		rnCals = 0; 
+		rnUV = 0; 
+		rnDist = 0; 
+		bkCount = 0; 
+		bkCals = 0; 
+		bkUV = 0; 
+		bkDist = 0; 
+
+        for(var doc of allActivity) {
+
+		// combine all returned data into activities
+		if (doc.activityId == activityNum) { 
+		    // accumulate data
+		    avgSpeed += doc.speed; 
+		    avgUV += doc.uv; 
+			actDist += calcCrow(prevLat, prevLng, doc.latitude, doc.longitude); 
+			prevLat = doc.latitude; 
+			prevLng = doc.longitude; 
+		    activityCount++; 
+			if (doc.timeStamp < startTime) { 
+				startTime = doc.timeStamp; 
+			} 
+			if (doc.timeStamp >= stopTime) { 
+				stopTime = doc.timeStamp; 
+			}
+
+		} else { 
+		    if ( devID !== -1) { 
+	     	// identify activity types, duration, average speed, calories burned, 
+		    	avgSpeed = avgSpeed / activityCount; 
+		    	avgUV = avgUV / activityCount; 
+				duration = stopTime - startTime; 
+				
+				if (avgSpeed < 2) { 
+					actType = "Walking"; 
+					cals = duration * (5/60);
+					totCount++; 
+					totCals += cals; 
+					totUV += avgUV; 
+					totDist += actDist; 
+					wkCount++; 
+					wkCals += cals; 
+					wkUV += avgUV; 
+					wkDist += actDist; 
+				} else if (avgSpeed < 6) { 
+					actType = "Running"; 
+					cals = duration * (20/60);
+					totCount++; 
+					totCals += cals; 
+					totUV += avgUV; 
+					totDist += actDist; 
+					rnCount++; 			
+					rnCals += cals; 
+					rnUV += avgUV; 
+					rnDist += actDist; 
+				} else { 
+					actType = "Biking"; 
+					cals = duration * (10/60);
+					totCount++; 
+					totCals += cals; 
+					totUV += avgUV; 
+					totDist += actDist; 
+					bkCount++; 
+					bkCals += cals; 
+					bkUV += avgUV; 
+					bkDist += actDist; 
+				} 
+				
+				actDist = 0; 			
+				
+			
+		    	// push data onto response
+				//responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
+			
+			}
+		    // start a new activity
+		    activityNum = doc.activityId; 
+		    devID = doc.deviceId; 
+			startTime = doc.timeStamp; 
+			stopTime = doc.timeStamp; 
+			
+			
+			// if (doc.timeStamp < startTime) { 
+				// startTime = doc.timeStamp; 
+			// } 
+			// if (doc.timeStamp >= stopTime) { 
+				// stopTime = doc.timeStamp; 
+			// }
+
+			avgSpeed = doc.speed; 
+		    avgUV = doc.uv; 
+			prevLat = doc.latitude; 
+			prevLng = doc.longitude; 
+		    activityCount = 1; 
+		}
+	 }
+	
+		// still need to post the final activity
+		avgSpeed = avgSpeed / activityCount; 
+       	avgUV = avgUV / activityCount; 
+		duration = stopTime - startTime; 
+		
+		
+		if (avgSpeed < 2) { 
+			actType = "Walking"; 
+			cals = duration * (5/60); 
+			totCount++; 
+			totCals += cals; 
+			totUV += avgUV; 
+			totDist += actDist; 
+			wkCount++; 	
+			wkCals += cals; 
+			wkUV += avgUV; 
+			wkDist += actDist; 
+		} else if (avgSpeed < 6) { 
+			actType = "Running"; 
+			cals = duration * (20/60);
+			totCount++; 
+			totCals += cals; 
+			totUV += avgUV; 
+			totDist += actDist; 
+			rnCount++; 			
+			rnCals += cals; 
+			rnUV += avgUV; 
+			rnDist += actDist; 
+		} else { 
+			actType = "Biking"; 
+			cals = duration * (10/60); 
+			totCount++; 
+			totCals += cals; 
+			totUV += avgUV; 
+			totDist += actDist; 
+			bkCount++; 
+			bkCals += cals; 
+			bkUV += avgUV; 
+			bkDist += actDist; 
+		} 
+
+		actDist = 0; 
+		responseJson.allActCount = totCount; 
+		responseJson.allCalories = (totCals / totCount).toFixed(0); 
+		responseJson.allUV = (totUV / totCount).toFixed(1); 
+		responseJson.allDistance = (totDist / totCount).toFixed(2); 
+		
+		responseJson.walkActCount = wkCount; 
+		responseJson.walkCalories = (wkCals / wkCount).toFixed(0); 
+		responseJson.walkUV = (wkUV / wkCount).toFixed(1); 
+		responseJson.walkDistance = (wkDist / wkCount).toFixed(2); 
+		
+		responseJson.runActCount = rnCount; 
+		responseJson.runCalories = (rnCals / rnCount).toFixed(0); 
+		responseJson.runUV = (rnUV / rnCount).toFixed(1); 
+		responseJson.runDistance = (rnDist / rnCount).toFixed(2); 
+		
+		responseJson.bikeActCount = bkCount; 
+		responseJson.bikeCalories = (bkCals / bkCount).toFixed(0); 
+		responseJson.bikeUV = (bkUV / bkCount).toFixed(1); 
+		responseJson.bikeDistance = (bkDist / bkCount).toFixed(2); 
+				
+		// push data onto response
+		//responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
+      }
+      res.status(200).json(responseJson);
+    }).sort({activityId:-1, timeStamp:1});    
+});
+
+// POST request return one or "all" activity data summarized 
+router.post('/local', function(req, res, next) {
+	
+	var centerLat = req.params.centerLat;
+	var centerLng = req.params.centerLng; 
+	var radiusKm = req.params.miles * 1.60934; 
+	
+    var responseJson = { 	allActCount: 0,
+							allDistance: 0,
+							allCalories: 0, 
+							allUV: 0, 
+							walkActCount: 0, 
+							walkDistance: 0, 
+							walkCalories: 0,
+							walkUV: 0, 
+							runActCount: 0, 
+							runDistance: 0, 
+							runCalories: 0, 
+							runUV: 0, 
+							bikeActCount: 0, 
+							bikeDistance: 0, 
+							bikeCalories: 0, 
+							bikeUV: 0 };
+
+    var query = {};
+
+    Activity.find(query, function(err, allActivity) {
+      if (err) {
+        var errorMsg = {"message" : err};
+        res.status(400).json(errorMsg);
+      }
+      else {
+		activityNum = -1; 
+		devID = -1; 
+		activityCount = 0;  
+		avgSpeed = 0; 
+		avgUV = 0;
+		prevLat = 0; 
+		prevLng = 0; 
+		actDist = 0; 
+		startTime = 999999999999; 
+		stopTime = -1; 
+		cals = 0; 
+		
+		totCount = 0; 
+		totCals = 0; 
+		totUV = 0; 
+		totDist = 0; 
+		wkCount = 0; 
+		wkCals = 0; 
+		wkUV = 0; 
+		wkDist = 0; 
+		rnCount = 0; 
+		rnCals = 0; 
+		rnUV = 0; 
+		rnDist = 0; 
+		bkCount = 0; 
+		bkCals = 0; 
+		bkUV = 0; 
+		bkDist = 0; 
+
+        for(var doc of allActivity) {
+
+		// combine all returned data into activities
+		if (doc.activityId == activityNum) { 
+		    // accumulate data
+		    avgSpeed += doc.speed; 
+		    avgUV += doc.uv; 
+			actDist += calcCrow(prevLat, prevLng, doc.latitude, doc.longitude); 
+			prevLat = doc.latitude; 
+			prevLng = doc.longitude; 
+		    activityCount++; 
+			if (doc.timeStamp < startTime) { 
+				startTime = doc.timeStamp; 
+			} 
+			if (doc.timeStamp >= stopTime) { 
+				stopTime = doc.timeStamp; 
+			}
+
+		} else { 
+		    if ( devID !== -1) { 
+	     	// identify activity types, duration, average speed, calories burned, 
+		    	avgSpeed = avgSpeed / activityCount; 
+		    	avgUV = avgUV / activityCount; 
+				duration = stopTime - startTime; 
+				
+				if (arePointsNear( {"lat":centerLat, "lng":centerLng}, {"lat":prevLat, "lng":prevLng}, radiusKm) ) {
+					if (avgSpeed < 2) { 
+						actType = "Walking"; 
+						cals = duration * (5/60);
+						totCount++; 
+						totCals += cals; 
+						totUV += avgUV; 
+						totDist += actDist; 
+						wkCount++; 
+						wkCals += cals; 
+						wkUV += avgUV; 
+						wkDist += actDist; 
+					} else if (avgSpeed < 6) { 
+						actType = "Running"; 
+						cals = duration * (20/60);
+						totCount++; 
+						totCals += cals; 
+						totUV += avgUV; 
+						totDist += actDist; 
+						rnCount++; 			
+						rnCals += cals; 
+						rnUV += avgUV; 
+						rnDist += actDist; 
+					} else { 
+						actType = "Biking"; 
+						cals = duration * (10/60);
+						totCount++; 
+						totCals += cals; 
+						totUV += avgUV; 
+						totDist += actDist; 
+						bkCount++; 
+						bkCals += cals; 
+						bkUV += avgUV; 
+						bkDist += actDist; 
+					} 
+				}
+				actDist = 0; 			
+			}
+		    // start a new activity
+		    activityNum = doc.activityId; 
+		    devID = doc.deviceId; 
+			startTime = doc.timeStamp; 
+			stopTime = doc.timeStamp; 
+			avgSpeed = doc.speed; 
+		    avgUV = doc.uv; 
+			prevLat = doc.latitude; 
+			prevLng = doc.longitude; 
+		    activityCount = 1; 
+		}
+	 }
+	
+		// still need to post the final activity
+		avgSpeed = avgSpeed / activityCount; 
+       	avgUV = avgUV / activityCount; 
+		duration = stopTime - startTime; 
+		
+		if ( arePointsNear({"lat":prevLat, "lng":prevLng},{"lat":centerLat, "lng":centerLng},radiusKm) ) {
+			if (avgSpeed < 2) { 
+				actType = "Walking"; 
+				cals = duration * (5/60); 
+				totCount++; 
+				totCals += cals; 
+				totUV += avgUV; 
+				totDist += actDist; 
+				wkCount++; 	
+				wkCals += cals; 
+				wkUV += avgUV; 
+				wkDist += actDist; 
+			} else if (avgSpeed < 6) { 
+				actType = "Running"; 
+				cals = duration * (20/60);
+				totCount++; 
+				totCals += cals; 
+				totUV += avgUV; 
+				totDist += actDist; 
+				rnCount++; 			
+				rnCals += cals; 
+				rnUV += avgUV; 
+				rnDist += actDist; 
+			} else { 
+				actType = "Biking"; 
+				cals = duration * (10/60); 
+				totCount++; 
+				totCals += cals; 
+				totUV += avgUV; 
+				totDist += actDist; 
+				bkCount++; 
+				bkCals += cals; 
+				bkUV += avgUV; 
+				bkDist += actDist; 
+			} 
+		}
+
+		actDist = 0; 
+		responseJson.allActCount = totCount; 
+		responseJson.allCalories = (totCals / totCount).toFixed(0); 
+		responseJson.allUV = (totUV / totCount).toFixed(1); 
+		responseJson.allDistance = (totDist / totCount).toFixed(2); 
+		
+		responseJson.walkActCount = wkCount; 
+		responseJson.walkCalories = (wkCals / wkCount).toFixed(0); 
+		responseJson.walkUV = (wkUV / wkCount).toFixed(1); 
+		responseJson.walkDistance = (wkDist / wkCount).toFixed(2); 
+		
+		responseJson.runActCount = rnCount; 
+		responseJson.runCalories = (rnCals / rnCount).toFixed(0); 
+		responseJson.runUV = (rnUV / rnCount).toFixed(1); 
+		responseJson.runDistance = (rnDist / rnCount).toFixed(2); 
+		
+		responseJson.bikeActCount = bkCount; 
+		responseJson.bikeCalories = (bkCals / bkCount).toFixed(0); 
+		responseJson.bikeUV = (bkUV / bkCount).toFixed(1); 
+		responseJson.bikeDistance = (bkDist / bkCount).toFixed(2); 
+				
+		// push data onto response
+		//responseJson.activity.push({ "deviceId": devID, "activityId": activityNum, "duration" : duration, "activityType" : actType, "uv": avgUV, "speed": avgSpeed, "calories": cals});
+      }
+      res.status(200).json(responseJson);
+    }).sort({activityId:-1, timeStamp:1});    
+});
+
+//This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+function calcCrow(lat1, lon1, lat2, lon2) 
+{
+	var R = 6371; // km
+	var dLat = toRad(lat2-lat1);
+	var dLon = toRad(lon2-lon1);
+	var lat1 = toRad(lat1);
+	var lat2 = toRad(lat2);
+
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	var d = R * c;
+	return d;
+}
+
+// Converts numeric degrees to radians
+function toRad(Value) 
+{
+	return Value * Math.PI / 180;
+}
+
+function arePointsNear(checkPoint, centerPoint, km) {
+    var ky = 40000 / 360;
+    var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
+    var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
+    var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
+    return Math.sqrt(dx * dx + dy * dy) <= km;
+}
+
 
 module.exports = router;
