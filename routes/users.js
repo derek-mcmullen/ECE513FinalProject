@@ -49,10 +49,10 @@ router.post('/register', function(req, res, next) {
         newUser.save( function(err, user) {
            if (err) {
               // Error can occur if a duplicate email is sent
-              res.status(400).json( {success: false, message: err.errmsg});
+              res.status(400).json( {success: false, message: "This email is already taken"});
            }
            else {
-               res.status(201).json( {success: true, message: user.fullName + " has been created."})
+               res.status(201).json( {success: true, message: user.fullName + " has been created."}); 
            }
         });
     });    
