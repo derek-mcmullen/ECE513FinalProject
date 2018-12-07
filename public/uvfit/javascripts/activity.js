@@ -23,9 +23,10 @@ function activityLocationSuccess(data, textStatus, jqXHR){
 	//$("map").show();
 	var coordinates = data.location;
 	var mapData = [];
+	mapData.length = 0;
 	//console.log(coordinates[0]['latitude']);
-	var i = 0;
-	for(i=0; i<data.location.length;i++){
+	var i = 1;
+	for(i=1; i<data.location.length;i++){
 		var obj = {
 			lat: coordinates[i]['latitude'],
 			lng: coordinates[i]['longitude']
@@ -34,6 +35,7 @@ function activityLocationSuccess(data, textStatus, jqXHR){
 	}
 	console.log(mapData);
 	//initMap();
+	var centerF = parseInt(Math.ceil((data.location.length/2)));
 	var flightPlanCoordinates = [
           {lat: 37.772, lng: -122.214},
           {lat: 21.291, lng: -157.821},
@@ -45,12 +47,13 @@ function activityLocationSuccess(data, textStatus, jqXHR){
         path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
     };
 var map = new google.maps.Map(document.getElementById("map"), {
-		zoom: 3,
-		center: {lat: 32, lng:-110 },
-		mapTypeId: 'terrain'
+		zoom:8,
+		center: mapData[1],
+		mapTypeId: 'roadmap'
 });
 var activityPath = new google.maps.Polyline({
-		path: flightPlanCoordinates,
+		//path: flightPlanCoordinates,
+		path: mapData,
 		icons: [{
                 icon: lineSymbol,
                 repeat:'35px',
@@ -116,7 +119,7 @@ function allTablePopulate(data, textStatus, jqXHR){
 				var span = document.getElementsByClassName("close")[0];
 				modal.style.display = "block";
 				
- 				//alert("Activity ID " + cells[6].getValue() + " Clicked");
+ 				alert("Activity ID " + cells[6].getValue() + " Clicked");
 				sendReqForActivityLocation((cells[6].getValue()));
 				$("#mapDuration").html((cells[2].getValue()));
 				$("#activityMap").html((cells[0].getValue()));
