@@ -86,7 +86,7 @@
           	<h1>Local Data View</h1>	
 			<div class="form-inline mb-3">
 			<h5 class="mr-2">Find Local Users within</h5>
-    		<select class="form-control" id="exampleFormControlSelect1">
+    		<select class="form-control" id="mileRadius">
       			<option>1</option>
       			<option>2</option>
       			<option>3</option>
@@ -96,7 +96,7 @@
 			<h5 class="ml-1 mr-2">miles of</h5>
 			<h5 class="mr-2"> zipcode: </h5>
 			<input class="form-control" id="zipcode" placeholder="Enter Zipcode" type="text">
-			<button type="button" id="geocodeButton">Geocode</button>
+			<button type="button" id="submitButton">Submit</button>
 		</div>
 			<div id="localUserData">
 			<p>In the past 7 days the most popular activity in <span id="zipcodeLocal"></span> was <span id="mostPopularLocal"></span>. Your local community selected completed a total of <span id="activityCountAllLocal"></span> activities with an average total distance of <span id="averageDistanceAllLocal"></span>. The average amount of calories per user that were burned in the past 7 days were <span id="averageCaloriesAllLocal"></span> and on average were exposed to a <span id="averageUVAllLocal"></span> UV Index.</p>
@@ -209,7 +209,7 @@
       <!-- /.row -->
     </div>
     <!-- /.container -->
-
+	<div id="error"></div>
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
