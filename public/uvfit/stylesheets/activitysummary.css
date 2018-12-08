@@ -2,8 +2,10 @@
 	border-style: solid;
 	border-color: black;
 	border-radius: 10px;
-	font-size: 18pt;
+	font-size: 14pt;
 	color: white;
+	padding-right: 5px;
+    padding-left: 5px;
 }
 p{
 	font-size: 14pt;
@@ -27,6 +29,8 @@ a.activityDetails:hover{
 .totals{
 	font-size: 22pt;
 	margin-bottom: 50px;
+	padding-right: 10px;
+    padding-left: 15px;
 }
 h2{
 	border-bottom: solid;;

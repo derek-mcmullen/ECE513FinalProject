@@ -13,13 +13,15 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 	$("#email").html(data.email);
 	$("#fullName").html(data.fullName);
 	$("#lastAccess").html(data.lastAccess);
-	$("#UVThreshold").val(data.uv); 
+	$("#UVThreshold").val(data.uv);
 	// Add the devices to the list before the list item for the add device button (link)
-	var prepString = ""
+	var prepString1 = "<div class='form-inline'><label class='mr-3'>Name: </label><input type='text' id='newName' value='" + data.fullName + "'></div>";
+	var prepString = "";
 	for (var device of data.devices) {
 	   prepString += "<li class='list-group-item' id='" + device.deviceId + "'>ID: " + device.deviceId + ", APIKEY: " + device.apikey + "<a class='d-none btn-danger Remove ml-3' href='#!' id='removeId' onclick='dropDevice(\""+device.deviceId+"\")'>Remove Device</a>" + "</li>";
 	}
 	$("#insert").html(prepString);
+	$("#submitUpdate").before(prepString1);
 }
 
 function accountInfoError(jqXHR, textStatus, errorThrown) {
