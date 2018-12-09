@@ -60,7 +60,36 @@ router.post('/register', function(req, res, next) {
 
 router.post("/update", function(req, res) { 
 	//req.body.name
-
+	// Check for authentication token in x-auth header
+   if (!req.headers["x-auth"]) {
+      return res.status(401).json({success: false, message: "No authentication token"});
+   }
+   console.log(req.body.name); 
+   var authToken = req.headers["x-auth"];
+   
+   try {
+      var decodedToken = jwt.decode(authToken, secret);
+      
+      User.findOne({email: decodedToken.email}, function(err, user) {
+         if(err) {
+            return res.status(200).json({success: false, message: "User does not exist."});
+         }
+         else {
+			 
+			User.updateOne({ email: decodedToken.email }, { fullName: req.body.name }, function(err, res) {
+				// Updated at most one doc, `res.modifiedCount` contains the number
+				// of docs that MongoDB updated
+			}); 
+           
+            return res.status(200).json({success: true, message: "User's name has been updated"});            
+         }
+      });
+   }
+   catch (ex) {
+      return res.status(401).json({success: false, message: "Invalid authentication token."});
+   }
+	
+	
 }); 
 
 router.get("/account" , function(req, res) {
