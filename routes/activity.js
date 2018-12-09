@@ -164,12 +164,13 @@ router.get('/location/:actid', function(req, res, next) {
 				// accumulate data
 				avgSpeed += doc.speed; 
 				avgUV += doc.uv; 
-				activityCount++; 
-				
-				if (doc.timeStamp < startTime) { 
+				if (doc.speed != 0 && doc.latitude != 0 && doc.longitude != 0 ) { 
+					activityCount++; 
+				}
+				if (doc.timeStamp < startTime && doc.timestamp != 0) { 
 					startTime = doc.timeStamp; 
 				} 
-				if (doc.timeStamp >= stopTime) { 
+				if (doc.timeStamp >= stopTime && doc.timeStamp != 0) { 
 					stopTime = doc.timeStamp; 
 				}
 			}
@@ -189,6 +190,7 @@ router.get('/location/:actid', function(req, res, next) {
 			// push location data onto response
 			for (var doc of allActivity) {
 				if (doc.latitude == 0 || doc.longitude == 0) {
+					// disregard
 				} else {	
 					latDecDegrees = Math.floor(doc.latitude/100); 
 					latDecDegrees += ((doc.latitude/100 - latDecDegrees)/60)*100; 
@@ -732,10 +734,19 @@ function toRad(Value)
 }
 
 function arePointsNear(checkPoint, centerPoint, km) {
+
+	latDecDegrees = Math.floor(checkPoint.lat/100); 
+	latDecDegrees += ((checkPoint.lat/100 - latDecDegrees)/60)*100; 
+	lngDecDegrees = Math.floor(checkPoint.lng/100); 
+	lngDecDegrees += ((checkPoint.lng/100 - lngDecDegrees)/60)*100; 	
+	
+	console.log("lat: " + latDecDegrees); 
+	console.log("lng: " + lngDecDegrees); 
+	
     var ky = 40000 / 360;
     var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
-    var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
-    var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
+    var dx = Math.abs(centerPoint.lng - lngDecDegrees) * kx;
+    var dy = Math.abs(centerPoint.lat - latDecDegrees) * ky;
     return Math.sqrt(dx * dx + dy * dy) <= km;
 }
 

@@ -58,6 +58,11 @@ router.post('/register', function(req, res, next) {
     });    
 });
 
+router.post("/update", function(req, res) { 
+	//req.body.name
+
+}); 
+
 router.get("/account" , function(req, res) {
    // Check for authentication token in x-auth header
    if (!req.headers["x-auth"]) {
