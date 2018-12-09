@@ -58,7 +58,10 @@
             </li>
 			  <li class="nav-item">
               <a class="nav-link" href="activitycommunity.html">Community Activity<i class="fas fa-users"></i></a>
-            </li> 
+            </li>
+			  <li class="nav-item">
+              <a class="nav-link" href="weather.html">Weather<i class="fas fa-cloud-sun"></i></a>
+            </li>
 			  <li class="nav-item">
               <a class="nav-link btn-primary text-center" href="signin.html" id="signInButton">Sign In</a>
             </li>
@@ -75,7 +78,7 @@
 	<div class="container-fluid" id="openingDiv">
 	<div class="col-12 mt-4">
 		<ul class="list-group">
-			<h3>Account Details</h3>
+			<h3>Account Details</h3><span><button type="button" class="btn btn-seconday mb-2" id="accountUpdate">Update Account Info</button></span>
   			<li class="list-group-item">Email Address: <span id="email"></span></li>
   			<li class="list-group-item">Name: <span id="fullName"></span></li>
   			<li class="list-group-item">Last Access: <span id="lastAccess"></span></li>
@@ -94,6 +97,18 @@
 						<p>If you would like to learn more about UV indexes and the associated harm 
 						click <a href="https://www.epa.gov/sunsafety/uv-index-scale-1">HERE</a> to
 						visit the Environmental Protection Agencies website</p>
+  					</div>
+
+				</div>
+				<!-- The Modal -->
+				<div id="myModal1" class="modal">
+  					<!-- Modal content -->
+  					<div class="modal-content">
+    					<span class="close">&times;</span>
+						<h3>Update Info</h3>
+						
+      					
+						<button type="button" class="btn btn-primary my-3" id="submitUpdate">Update</button>
   					</div>
 
 				</div>
