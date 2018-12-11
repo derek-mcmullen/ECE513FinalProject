@@ -6,6 +6,18 @@ var Device = require("../models/device");
 var bcrypt = require("bcrypt-nodejs");
 var jwt = require("jwt-simple");
 
+var nodemailer = require('nodemailer'); 
+
+var gmail = fs.readFileSync(__dirname + '/../../gmail').toString(); 
+
+var transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+        user: 'uvfit513@gmail.com',
+        pass: gmail
+    }
+});
+
 /* Authenticate user */
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 
@@ -52,11 +64,54 @@ router.post('/register', function(req, res, next) {
               res.status(400).json( {success: false, message: "This email is already taken"});
            }
            else {
-               res.status(201).json( {success: true, message: user.fullName + " has been created."}); 
-           }
+				
+				
+				var emailMsg = '<p>Click the link below to complete email verification</p>';
+				    emailMsg += '<p>http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/users/verify/'+ newUser.email + '</p>'; 
+				
+				var mailOptions = {
+				from: '"UVFit Team" <no-reply@uvfit513@gmail.com>',
+				to: newUser.email,
+				subject: 'Verify Your Email',
+				html: emailMsg };
+				
+				transporter.sendMail(mailOptions, function (err, info) {				
+					if(err){ 
+						console.log(err);
+					} else { 
+						 console.log(info);
+					}
+				}); 			
+				res.status(201).json( {success: true, message: user.fullName + " has been created."}); 
+           
+		   }
         });
     });    
 });
+
+router.post("/delete", function(req, res) { 
+	User.find({ email: "statikhairdo@gmail.com"}).remove().exec(); 
+	return res.status(200).json({success:true}); 
+}); 
+
+router.get("/verify/:email", function(req,res) { 
+	
+	User.findOne({email: req.params.email}, function(err, user) {
+         if(err) {
+            return res.status(200).json({success: false, message: "User does not exist."});
+         }
+         else {
+			 
+			User.updateOne({ email: req.params.email }, { verified: true }, function(err, res) {
+				// Updated at most one doc, `res.modifiedCount` contains the number
+				// of docs that MongoDB updated
+			}); 
+			console.log("email verified"); 
+			res.redirect("http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/uvfit/signin.html"); 
+            //return res.status(200).json({success: true, message: "Your email has been verified!"});            
+		 }
+      });
+}); 
 
 router.post("/update", function(req, res) { 
 	//req.body.name
