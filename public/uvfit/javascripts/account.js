@@ -6,24 +6,24 @@ function postAccountUpdate(userData){
         data: userData, 
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {
-			if(jqXHR.status === 1){ //This is for if the password is updated
+			if(jqXHR.status === 203){ //This is for if the password is updated
 				$("#error").hide();
 				window.localStorage.removeItem("authToken");
       			window.location = "signin.html";
 			}
-			if(jqXHR.status === 2){ //This is for if the email is updated
+			if(jqXHR.status === 201){ //This is for if the email is updated
 				$("#error").hide();
 				window.localStorage.removeItem("authToken");
-      			window.location = "signin.html"; //CHANGE THIS TO EMAIL VERIFICATION HTML LOCATION
+      			window.location = "emailVerifyNeeded.html"; 
 			}
-			if(jqXHR.status === 3){ //This is for if Name is updated
+			if(jqXHR.status === 200){ //This is for if Name is updated
 				$("#error").hide();
 				location.reload(true);
 			}
-			if(jqXHR.status === 4){ //If username and Password is changed
+			if(jqXHR.status === 202){ //If username and Password is changed
 				$("#error").hide();
 				window.localStorage.removeItem("authToken");
-      			window.location = "signin.html"; //CHANGE THIS TO EMAIL VERIFICATION HTML LOCATION
+      			window.location = "emailVerifyNeeded.html"; 
 			}
 			
         },
@@ -146,7 +146,7 @@ $('#submitUpdate').click(function(){
 			newData["email"] = email;
 		}
 		//console.log(newData);
-		postAccountUpdate(userData);
+		postAccountUpdate(newData);
 	}
 	else{
 		$("#errorList").html(errorString);

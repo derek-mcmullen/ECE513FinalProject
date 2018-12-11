@@ -35,7 +35,7 @@ router.post('/signin', function(req, res, next) {
                res.status(401).json({success : false, error : "Error authenticating. Please contact support."});
             }
             else if(valid) {
-			   var token = jwt.encode({email: req.body.email}, secret);
+			   var token = jwt.encode({email: req.body.email}, secret); 
                res.status(201).json({success : true, token : token});         
             }
             else {
@@ -49,7 +49,6 @@ router.post('/signin', function(req, res, next) {
 /* Register a new user */
 router.post('/register', function(req, res, next) {
 
-    // FIXME: Add input validation
     bcrypt.hash(req.body.password, null, null, function(err, hash) {
         // Create an entry for the user
         var newUser = new User( {
@@ -82,17 +81,15 @@ router.post('/register', function(req, res, next) {
 						 console.log(info);
 					}
 				}); 			
+				setTimeout(function() { 
+					User.find({ verified: false , createdOn: {$lt : (Date.now() - 1000*60*60)}}).remove().exec(); 
+				}, 60*60*1000); //one hour in millis
 				res.status(201).json( {success: true, message: user.fullName + " has been created."}); 
            
 		   }
         });
     });    
 });
-
-router.post("/delete", function(req, res) { 
-	User.find({ email: "statikhairdo@gmail.com"}).remove().exec(); 
-	return res.status(200).json({success:true}); 
-}); 
 
 router.get("/verify/:email", function(req,res) { 
 	
@@ -101,13 +98,12 @@ router.get("/verify/:email", function(req,res) {
             return res.status(200).json({success: false, message: "User does not exist."});
          }
          else {
-			 
+			  
 			User.updateOne({ email: req.params.email }, { verified: true }, function(err, res) {
 				// Updated at most one doc, `res.modifiedCount` contains the number
 				// of docs that MongoDB updated
-			}); 
-			console.log("email verified"); 
-			res.redirect("http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/uvfit/signin.html"); 
+			});  
+			res.redirect("http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/uvfit/emailVerify.html"); 
             //return res.status(200).json({success: true, message: "Your email has been verified!"});            
 		 }
       });
@@ -130,14 +126,69 @@ router.post("/update", function(req, res) {
             return res.status(200).json({success: false, message: "User does not exist."});
          }
          else {
-			 
-			User.updateOne({ email: decodedToken.email }, { fullName: req.body.name }, function(err, res) {
-				// Updated at most one doc, `res.modifiedCount` contains the number
-				// of docs that MongoDB updated
-			}); 
-           
+			if (req.body.password ) {
+				if (user.email == req.body.email) { 
+					bcrypt.hash(req.body.password, null, null, function(err, hash) {
+					
+					// change password and name field 
+						User.updateOne({ email: decodedToken.email }, { fullName: req.body.name, passwordHash: hash }, function(err, res) {
+							// Updated at most one doc, `res.modifiedCount` contains the number
+							// of docs that MongoDB updated
+						}); 
+					}); 
+					return res.status(203).json({success: true, message: "User's password has been updated"}); 
+				} else { 
+					bcrypt.hash(req.body.password, null, null, function(err, hash) {
+					// change password and email field 
+						User.updateOne({ email: decodedToken.email }, { email: req.body.email, fullName: req.body.name, passwordHash: hash }, function(err, res) {
+							// Updated at most one doc, `res.modifiedCount` contains the number
+							// of docs that MongoDB updated
+						}); 
+					});
+					return res.status(202).json({success: true, message: "User's email and password have been updated"}); 
+				}
+			} else {
+				if (user.email == req.body.email )  { 
+					// only updating name
+					User.updateOne({ email: decodedToken.email }, { fullName: req.body.name }, function(err, res) {
+						// Updated at most one doc, `res.modifiedCount` contains the number
+						// of docs that MongoDB updated
+					});
+					return res.status(200).json({success: true, message: "User's name has been updated"});            
+				} else { 
+					// updating email and name
+					User.updateOne({ email: decodedToken.email }, { email: req.body.email, fullName: req.body.name }, function(err, res) {
+						// Updated at most one doc, `res.modifiedCount` contains the number
+						// of docs that MongoDB updated
+					});
+					
+					// new email verification
+					var emailMsg = '<p>Click the link below to complete email verification</p>';
+				    emailMsg += '<p>http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/users/verify/'+ req.body.email + '</p>'; 
+				
+					var mailOptions = {
+					from: '"UVFit Team" <no-reply@uvfit513@gmail.com>',
+					to: req.body.email,
+					subject: 'Verify Your Email',
+					html: emailMsg };
+					
+					transporter.sendMail(mailOptions, function (err, info) {				
+						if(err){ 
+							console.log(err);
+						} else { 
+							 console.log(info);
+						}
+					}); 			
+					setTimeout(function() { 
+						User.find({ verified: false , createdOn: {$lt : (Date.now() - 1000*60*60)}}).remove().exec(); 
+					}, 60*60*1000); //one hour in millis
+
+					return res.status(201).json({success: true, message: "User's email has been updated"});            
+				}
+				
+			} 				
             return res.status(200).json({success: true, message: "User's name has been updated"});            
-         }
+         } 
       });
    }
    catch (ex) {

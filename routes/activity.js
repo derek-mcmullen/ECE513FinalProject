@@ -591,7 +591,7 @@ router.post('/local', function(req, res, next) {
 		    	avgUV = avgUV / activityCount; 
 				duration = stopTime - startTime; 
 				
-				if (arePointsNear( {"lat":centerLat, "lng":centerLng}, {"lat":prevLat, "lng":prevLng}, radiusKm) ) {
+				if (arePointsNear( {"lat":prevLat, "lng":prevLng},{"lat":centerLat, "lng":-centerLng},radiusKm) ) {
 					if (avgSpeed < 2) { 
 						actType = "Walking"; 
 						cals = duration * (5/60);
@@ -647,7 +647,7 @@ router.post('/local', function(req, res, next) {
        	avgUV = avgUV / activityCount; 
 		duration = stopTime - startTime; 
 		
-		if ( arePointsNear({"lat":prevLat, "lng":prevLng},{"lat":centerLat, "lng":centerLng},radiusKm) ) {
+		if ( arePointsNear({"lat":prevLat, "lng":prevLng},{"lat":centerLat, "lng":-centerLng},radiusKm) ) {
 			if (avgSpeed < 2) { 
 				actType = "Walking"; 
 				cals = duration * (5/60); 
@@ -740,8 +740,6 @@ function arePointsNear(checkPoint, centerPoint, km) {
 	lngDecDegrees = Math.floor(checkPoint.lng/100); 
 	lngDecDegrees += ((checkPoint.lng/100 - lngDecDegrees)/60)*100; 	
 	
-	console.log("lat: " + latDecDegrees); 
-	console.log("lng: " + lngDecDegrees); 
 	
     var ky = 40000 / 360;
     var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
@@ -749,6 +747,6 @@ function arePointsNear(checkPoint, centerPoint, km) {
     var dy = Math.abs(centerPoint.lat - latDecDegrees) * ky;
     return Math.sqrt(dx * dx + dy * dy) <= km;
 }
-
+ 
 
 module.exports = router;

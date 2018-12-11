@@ -5,6 +5,7 @@ var userSchema = new db.Schema({
   fullName:     { type: String, required: true },
   passwordHash: String,
   lastAccess:   { type: Date, default: Date.now },
+  createdOn: 	{ type: Date, default: Date.now }, 
   userDevices:  [ String ], 
   UVThreshold:  { type: Number, default: 500 }, 
   verified: 	{ type: Boolean, default: false} 
