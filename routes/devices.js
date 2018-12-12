@@ -94,22 +94,25 @@ router.post('/register', function(req, res, next) {
     var responseJson = {
         registered: false,
         message : "",
-        apikey : "none"
+        apikey : "none" 
     };
     var deviceExists = false;
+	console.log("in the endpoint"); 
 
     // Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("deviceId")) {
+    if( !req.body.deviceId ) {
         responseJson.message = "Missing deviceId.";
         res.status(400).json(responseJson);
         return;
     }
    
 	var email = "";
-    
+	console.log(req.body);
     // If authToken provided, use email in authToken 
     if (req.headers["x-auth"]) {
+			 
         try {
+
             var decodedToken = jwt.decode(req.headers["x-auth"], secret);
             email = decodedToken.email;
         }
@@ -175,6 +178,7 @@ router.post('/register', function(req, res, next) {
 
 // update UV Threshold on device
 router.post('/uvedit', function(req, res, next) {
+		
     var responseJson = {
         success: false,
         message : "",
@@ -218,6 +222,7 @@ router.post('/uvedit', function(req, res, next) {
 
 // update UV Threshold on device
 router.post('/apiedit', function(req, res, next) {
+		
     var responseJson = {
         success: false,
         message : "",

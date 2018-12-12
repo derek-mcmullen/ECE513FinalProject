@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: "Derek's Badass Server" });
+  res.render('index', { title: "UVFit513 Server" });
 });
 
 module.exports = router;

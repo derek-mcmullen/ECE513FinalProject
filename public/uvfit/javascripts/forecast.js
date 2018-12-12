@@ -7,7 +7,7 @@ function sendReqForForecastWeather() {
 	var card = "";
 	var day = new Date().getDay();
    $.ajax({
-      url: "http://api.weatherbit.io/v2.0/forecast/daily",
+      url: "https://api.weatherbit.io/v2.0/forecast/daily",
       jsonp: "callback",
       dataType: "jsonp",
       data: {postal_code: zip, units: units, key: key, days: days }
@@ -21,7 +21,7 @@ function sendReqForForecastWeather() {
 			if(day>6){day=0;};
 			}
 			
-			card += "<div class=''><div class='days card shadow-lg mx-4 my-3' style='width: 18rem;''><div class='card-body' id='iconHere'><img class='card-img-top' src='https://www.weatherbit.io/static/img/icons/" + data.data[i].weather.icon + ".png' alt='Weather Image'><h5 class='card-title' id='date'>"  + dayOfWeek(day,i) + "</h5><span>" + data.data[i].valid_date +"</span><p class='card-text'>" + "<br>" + data.data[i].weather.description + "<br>Maximum Temperature:" + data.data[i].max_temp + " &deg;F<br>Minimum Temperature: " + data.data[i].min_temp + " &deg;F<br>UV Index: " + data.data[i].uv.toFixed(1) + "</p></div></div></div>";
+			card += "<div class=''><div class='days card shadow-lg mx-4 my-3' style='width: 18rem;''><div class='card-body' id='iconHere'><img class='card-img-top' src='https://www.weatherbit.io/static/img/icons/" + data.data[i].weather.icon + ".png' alt='Weather Image'><h5 class='card-title' id='date'>"  + dayOfWeek(day,i) + "</h5><span>" + data.data[i].valid_date +"</span><p class='card-text'>" + "<br>" + data.data[i].weather.description + "<br>Maximum Temperature: " + data.data[i].max_temp + " &deg;F<br>Minimum Temperature: " + data.data[i].min_temp + " &deg;F<br>UV Index: " + data.data[i].uv.toFixed(1) + "</p></div></div></div>";
      	}
 	   $("#beforeThis").before(card);
    }).fail(function(jqXHR) {

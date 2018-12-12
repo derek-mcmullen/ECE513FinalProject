@@ -66,7 +66,7 @@ router.post('/register', function(req, res, next) {
 				
 				
 				var emailMsg = '<p>Click the link below to complete email verification</p>';
-				    emailMsg += '<p>http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/users/verify/'+ newUser.email + '</p>'; 
+				    emailMsg += '<p>https://uvfit513.duckdns.org/users/verify/'+ newUser.email + '</p>'; 
 				
 				var mailOptions = {
 				from: '"UVFit Team" <no-reply@uvfit513@gmail.com>',
@@ -103,7 +103,7 @@ router.get("/verify/:email", function(req,res) {
 				// Updated at most one doc, `res.modifiedCount` contains the number
 				// of docs that MongoDB updated
 			});  
-			res.redirect("http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/uvfit/emailVerify.html"); 
+			res.redirect("https://uvfit513.duckdns.org/uvfit/emailVerify.html"); 
             //return res.status(200).json({success: true, message: "Your email has been verified!"});            
 		 }
       });
@@ -115,7 +115,7 @@ router.post("/update", function(req, res) {
    if (!req.headers["x-auth"]) {
       return res.status(401).json({success: false, message: "No authentication token"});
    }
-   console.log(req.body.name); 
+
    var authToken = req.headers["x-auth"];
    
    try {
@@ -164,7 +164,7 @@ router.post("/update", function(req, res) {
 					
 					// new email verification
 					var emailMsg = '<p>Click the link below to complete email verification</p>';
-				    emailMsg += '<p>http://ec2-18-188-186-119.us-east-2.compute.amazonaws.com:3000/users/verify/'+ req.body.email + '</p>'; 
+				    emailMsg += '<p>https://uvfit513.duckdns.org/users/verify/'+ req.body.email + '</p>'; 
 				
 					var mailOptions = {
 					from: '"UVFit Team" <no-reply@uvfit513@gmail.com>',

@@ -11,6 +11,8 @@ var devicesRouter = require('./routes/devices');
 var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var activityRouter = require('./routes/activity'); 
+var https = require('https'); 
+var fs = require('fs'); 
 
 var app = express();
 	
@@ -81,5 +83,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const httpsOptions = {key: fs.readFileSync('./privkey.pem'), 
+                      cert: fs.readFileSync('./fullchain.pem')}
+const server = https.createServer(httpsOptions,app).listen(3000,() => {console.log('Server running at 3000')}); 
 
 module.exports = app;

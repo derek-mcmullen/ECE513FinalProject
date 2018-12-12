@@ -66,7 +66,7 @@ function registerDevice() {
         type: 'POST',
         headers: { 'x-auth': window.localStorage.getItem("authToken") },   
         data: { deviceId: $("#deviceId").val(), 
-		email: $("#email").val() }, 
+		email: "test@gmail.com" }, //$("#email").val() }, 
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {
            // Add new device to the device list

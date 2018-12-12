@@ -115,7 +115,7 @@ router.get('/summary/:devid', function(req, res, next) {
 });
 
 // raw activity data
-router.get('/raw', function(req, res, next) { 
+router.get('/raw', function(req, res, next) {	
 
     var responseJson = { activity: [] };
 	var query = {};
@@ -139,6 +139,7 @@ router.get('/raw', function(req, res, next) {
 
 // GET request return activity specific data and location parameters 
 router.get('/location/:actid', function(req, res, next) {
+	
     var activityId = req.params.actid;
     var responseJson = {};
 
@@ -220,7 +221,7 @@ router.post('/update', function(req, res, next) {
     };
 
     // Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("deviceId")) {
+    if( !req.body.deviceId) {
         responseJson.message = "Missing deviceId.";
         res.status(400).json(responseJson);
         return;
@@ -229,7 +230,7 @@ router.post('/update', function(req, res, next) {
     // See if device is registered
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device !== null) {
-	    
+			   
 		// log this activity if API key matches
 		var js; 
 		var obj; 
@@ -245,6 +246,10 @@ router.post('/update', function(req, res, next) {
 		    obj = JSON.parse(js); 
 		} 
 		
+		if (obj.k != device.apikey) { 
+			responseJson.message = "apikey not authorized"; 
+			return res.status(403).json(responseJson); 
+		}
 		// TODO: check the API key
 	
 		 /* To help save space in the string we use the following encoding:
